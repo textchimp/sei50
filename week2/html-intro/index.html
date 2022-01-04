@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>HTML Intro</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <h1>Welcome to My Special Site With All My Thoughts and Feelings On It</h1>
+
+  It was nice of you to visit.
+
+  Another line.           Some spaces.
+
+  <p id="intro">Thank you for<br>visiting my page.</p>
+
+  <p>
+    <em>
+      Sign my <a href="http://ga.co/" target="_blank">Guestbook</a>
+    </em>
+  </p>
+
+  <a href="something.html">Here is a link tag that is NOT inside a paragraph tag</a>
+
+  <br>
+
+  <img src="http://www.fillmurray.com/200/150" alt="A photo of Bill Murray looking ambivalent">
+
+  <h4>My favourite dogs:</h4>
+
+  <ul>
+    <li>Ruby</li>
+    <li>Jess</li>
+    <li class="special">Nookie</li>
+  </ul>
+
+    <!--
+
+      This is
+
+      a comment ... it can be multi-lined.
+
+      They are still visible in the source!
+      Don't nest them.
+
+     -->
+
+
+
+  <h2>Here comes a form!</h2>
+
+  <form>
+    <!-- the container tag for grouping together all the related form elements -->
+
+    <label>
+      First Name:
+      <input type="text" placeholder="Enter name">
+    </label>
+
+    <br>
+
+    <textarea>
+      Whatever you have here is the pre-loaded content of the textarea.
+
+      You can type multiple lines or paragraphs.
+    </textarea>
+
+    <br>
+
+    <input type="date">
+
+    <br>
+
+    <label>
+      Dog breed:
+      <select name="breed">
+        <option value="1">Toller</option>
+        <option value="23">Labrador</option>
+        <option value="156">Pug</option>
+      </select>
+    </label>
+
+    <br>
+
+    <fieldset>
+      <legend>Select the preferred dog traits:</legend>
+
+      <label>
+        <input type="checkbox" name="traits" value="boundy" checked>
+        Lots of bounding around
+      </label>
+      <br>
+      <label>
+        <input type="checkbox" name="traits" value="drool">
+        Prodigous slobbering
+      </label>
+
+    </fieldset>
+
+    <fieldset>
+      <legend>Select only one brother:</legend>
+
+      <label>
+        <input type="radio" name="bro" value="Groucho">
+        Groucho
+      </label>
+      <br>
+      <label>
+        <input type="radio" name="bro" value="Chico">
+        Chico
+      </label>
+      <br>
+      <label>
+        <input type="radio" name="bro" value="Harpo">
+        Chico
+      </label>
+
+    </fieldset>
+
+    <!-- <button>Submit Info!</button> -->
+    <input type="submit" value="Submit Info">
+
+  </form>
+
+
+  <table>
+
+    <thead>
+      <th>Brother</th>
+      <th>Instrument</th>
+    </thead>
+
+    <tr>
+      <td>Groucho</td>
+      <td>Guitar</td>
+    </tr>
+
+    <tr>
+      <td>Harpo</td>
+      <td>Harp</td>
+    </tr>
+
+    <tr>
+      <td>Chico</td>
+      <td>Flute</td>
+    </tr>
+
+  </table>
+
+
+  <h4>Forbidden!!!!</h4>
+  <br> DON'T USE "br" for formatting! Use CSS padding/margins
+  <br>
+  <b>Bold tag</b> - use "strong" <strong>instead</strong>.
+  <br>
+  <i>Italics</i> - use "em" <em>instead</em>.
+  <br>
+  <blink>BLINK - SO ANNOYING</blink> Use JS or CSS animations?
+  <br>
+  <marquee>Scrolling text!!!! So easy and fun</marquee>
+  <br>
+  <font size="12">Font tag - use CSS instead</font>
+  <br>
+  <span style="color: red;">Inline styles - use a separate CSS file instead for good "separation of concerns"</span>
+
+
+
+
+  <p>
+    Brandname &copy;  <!-- HTML entity -->
+    <br>
+    Literal less-than sign: 2 &lt; 3
+  </p>
+
+  <pre>
+First line...        then some spaces
+Another line     more spaces
+Third line
+  </pre>
+
+  <p>
+    Here is some code: <code>const x = 1;</code>
+  </p>
+
+
+  <p>
+    Here is a div:  <div>Notice that it demands its own line. That is because divs are "block-level" elements.</div> This comes after the div.
+  </p>
+
+  <p class="special someotherclass anotherone">
+    Here is a span: <span>It shares a line with other content. This is because it is an "inline" element by default.</span> After the span.
+  </p>
+
+  <p class="special yetanothername">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta maiores aperiam nihil, ipsum, doloremque perferendis quae minima eius veniam dolore recusandae officiis distinctio iusto obcaecati velit officia dolor quasi explicabo.</p>
+
+  <blockquote>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas facilis quasi sed harum velit dignissimos iusto dolorem neque esse reprehenderit tempore aliquid, molestiae quis non distinctio, et odio sunt perferendis.</blockquote>
+
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis perferendis est voluptate aspernatur voluptatem iusto inventore at delectus aut enim. Itaque sapiente inventore praesentium iste similique ad dignissimos, ea totam.</p>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+
+h1 {
+  color: hotpink;
+}
+
+p {
+  color: green;
+  border: 1px solid red;
+}
+
+#intro {
+  background-color: #FF0000;  /*  rgb(255,0,255);  */
+}
+
+li.special {
+  font-family: "Comic Sans MS";
+}
+
+p.otherclass > a.someclass {
+  font-weight: bold;
+  color: red;
+}
+
+* {
+  /* border: 1px solid gray; */
+}
+
+/* img:hover {
+  border: 1px solid red;
+  width: 100%;
+} */
+
+#bill {
+  position: absolute;
+  top: 0px; /* JS won't notice this! */
+}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>CSS Layout</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <h1>CSS Layout</h1>
+
+  <p>Let's do this</p>
+
+
+
+  <div class="box staticExample">
+    <strong>static (default):</strong>
+    <br>
+    the position is whatever the browser calculates for this element in the page flow; you can't change it with top/left CSS offsets
+  </div>
+
+  <div class="box relativeExample">
+    <strong>relative:</strong>
+    <br>
+     Offsets <em>do</em> work, and are calculated relative to the default (static) position in browser's page flow
+  </div>
+
+
+  <div class="box parentOfAbsolute">
+
+    <strong>(parent of absolute)</strong>
+
+    <div class="box absoluteExample">
+      <strong>absolute:</strong>
+      <br>
+       Offsets work, and are calculated relative to the nearest containing element (ancestor) which has a specific non-static position value... otherwise relative to the "body" tag, i.e. whole document
+    </div>
+  </div><!-- div.parentOfAbsolute -->
+
+  <div class="box fixedExample">
+    <strong>fixed:</strong>
+    <br>
+     Offsets are calculated relative to the entire browser window (viewport) - i.e. the element does NOT move when you scroll the document
+  </div>
+
+
+
+  <br>
+  <br>
+
+  <div class="inlineExample">
+    This element has <code>display: inline;</code>
+  </div>
+
+  <div class="inlineExample">
+    This element is also <code>display: inline;</code>
+  </div>
+
+  <div class="blockExample">
+    This element has <code>display: block;</code>
+  </div>
+
+  <div class="blockExample">
+    This element is also <code>display: block;</code>
+  </div>
+
+  <div class="displayNoneExample">
+    This element is <code>display: none;</code>
+  </div>
+
+
+  <div class="inlineBlockExample">
+    This element has <code>display: inline-block;</code>
+  </div>
+
+  <div class="inlineBlockExample">
+    This element is also <code>display: inline-block;</code>
+  </div>
+
+  <br>
+  <br>
+
+
+</body>
+</html>

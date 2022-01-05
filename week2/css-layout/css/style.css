@@ -1,0 +1,61 @@
+
+div.inlineExample {
+  border: 1px solid red;
+  display: inline;
+  width: 300px; /* gets ignored! */
+}
+
+div.blockExample {
+  border: 1px solid green;
+  display: block;  /* it's the default anyway */
+  width: 30%;
+}
+
+div.inlineBlockExample {
+  border: 1px solid blue;
+  display: inline-block;
+  width: 200px;
+  height: 100px;
+}
+
+div.displayNoneExample {
+  display: none;
+  /* visibility: hidden; */  /* not visible, but still affects the flow of the page */
+}
+
+
+.box {
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  text-align: center;  /* NO <center> tag allowed */
+  vertical-align: top;
+  border: 1px solid grey;
+}
+
+.staticExample {
+  position: static; /* this is the default */
+  left: 100px /* this has no effect due to 'static'  */
+}
+
+.relativeExample {
+  position: relative;
+  left: 50px; /* "push this from the left (to the right)" */
+  top: 100px; /* "push down from the top" */
+}
+
+.absoluteExample {
+  position: absolute;
+  top: 50px;
+  left: 100px;
+}
+
+.parentOfAbsolute {
+  position: relative;
+}
+
+.fixedExample {
+  position: fixed;
+  top: 20px;
+  right: 50px;
+}

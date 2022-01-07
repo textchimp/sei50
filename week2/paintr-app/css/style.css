@@ -1,0 +1,16 @@
+
+body {
+  background-color: black;
+  /* margin: 0; */
+  overflow: hidden;
+}
+
+div.circle {
+  display: inline-block;
+  color: white;
+  /* border: 1px solid red; */
+  border-radius: 50%;
+  position: absolute;
+  /* background: url(https://media1.giphy.com/media/1b4mV7p0DBRO8/giphy.gif);
+  background-size: contain; */
+}

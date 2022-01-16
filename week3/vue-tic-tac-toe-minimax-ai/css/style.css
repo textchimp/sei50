@@ -48,7 +48,7 @@
     height: 33%;
     border: 1px solid green;
     font-size: 14vmax; /* higher of vw or vh */
-    line-height: 95%;
+    line-height: 110%;
   }
 
   .celebrate{

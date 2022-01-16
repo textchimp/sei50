@@ -84,36 +84,6 @@ const ai = {
 
 
 
-const viz = {
-
-  render: function( board, turn, moves ){
-
-  },
-
-};
-
-
-Vue.component('board', {
-  props: [ 'state', 'moveCount', 'scores', 'bestMove', 'children' ],
-    data: function(){
-      return {
-        age: 5
-      };
-    },
-    methods: {
-      incrementAge: function(){
-        this.age++;
-      } // incrementAge()
-    },
-    template: `
-      <div id="game-container">
-        <div v-for="i in 9" class="cell" >
-          {{ state[i-1] || '&nbsp;' }}
-        </div>
-      </div>
-    `
-}); // Vue board component
-
 
 const gameApp = new Vue({
   el: '#main',

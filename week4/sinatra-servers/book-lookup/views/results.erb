@@ -1,0 +1,10 @@
+
+<h3><%= @results['totalItems'] %> Results for "<%= params[:title] %>"</h3>
+
+<ul>
+<% @results['items'].each do |book| %>
+  <li>
+    <%= book['volumeInfo']['title'] %>
+  </li>
+<% end %>
+</ul>

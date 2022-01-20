@@ -1,0 +1,14 @@
+
+<h4>
+  Index of Pets
+</h4>
+
+<ul>
+  <% @results.each do |pet| %>
+    <li>
+      <a href="/pets/<%= pet['id'] %>">
+        <%= pet['name']  %>
+      </a>
+    </li>
+  <% end %>
+</ul>

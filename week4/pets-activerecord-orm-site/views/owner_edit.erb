@@ -1,0 +1,33 @@
+
+
+<h3>
+  Edit Owner: <%= @owner.name %>
+</h3>
+
+<form action="/owners/<%= @owner.id %>" method="post">
+
+  <label>
+    Name:
+    <input type="text" name="name" value="<%= @owner.name %>">
+  </label>
+  <br>
+
+  <label>
+    Email:
+    <input type="text" name="email" value="<%= @owner.email %>">
+  </label>
+  <br>
+
+  <!--
+   WHAT ABOUT EDITING PETS?
+   How would you show a checkbox list of the owner's
+   current pets, and unchecking the box will 'dissociate'
+   the pet from this owner?
+   How would you also show a dropdown to add an existing pet to this owner?
+   How would you add a form to CREATE a new pet to add to this owner?
+  -->
+
+  <!-- Another way of creating a submit button -->
+  <input type="submit" value="Update">
+
+</form>

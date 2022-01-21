@@ -1,0 +1,8 @@
+body {
+  font-family: Helvetica, sans-serif;
+  background-color: hotpink;
+}
+
+.pet_image {
+  max-height: 40vh;
+}

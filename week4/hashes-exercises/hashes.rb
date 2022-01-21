@@ -71,7 +71,7 @@ users = {
   },
 }
 
-# require 'pry'; binding.pry
+require 'pry'; binding.pry
 
 
 #     How would you access Jonathan's Twitter handle (i.e. the string "tronathan")?

@@ -1,0 +1,14 @@
+
+<h4>
+  Search Results for "<%= params[:query] %>"
+</h4>
+
+<ul>
+  <% @results['results'].each do |movie| %>
+    <li>
+        <a href="/movies/<%= movie['id'] %>">
+          <img src="http://image.tmdb.org/t/p/w154<%= movie['poster_path'] %>" >
+        </a>
+    </li>
+  <% end %>
+</ul>

@@ -1,0 +1,19 @@
+
+
+<h2>Welcome to the Funnies Page</h2>
+
+<p>
+  <%= @title %>
+</p>
+
+<!--
+  EVEN THOUGH this file lives in app/assets/images/dogs.jpg,
+  Rails hides most of those folders when
+  you request a file
+-->
+
+<!-- <img src="/assets/dogs.jpg" alt="Hilarious poker hound hijinx"> -->
+
+<!-- use a Rails template helper tag to show this image: -->
+
+<%= image_tag 'dogs.jpg', alt: 'Poker dogs', class: 'dogs', id: 'pokerdoggos', madeupattributename: 'hi' %>

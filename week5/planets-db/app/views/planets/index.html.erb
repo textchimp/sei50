@@ -1,0 +1,18 @@
+
+<h2>Index of Planets</h2>
+
+<ul>
+  <% @planets.each do |planet| %>
+    <li>
+
+      <%= link_to planet.name, planet_path(planet.id) %>
+
+     <!--
+      <a href="/planets/<%= planet.id %>">
+        <%= planet.name %>
+      </a>
+      -->
+
+    </li>
+  <% end %>
+</ul>

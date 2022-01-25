@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Planets of the Solar Systemmmmmm</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
+
+  <body>
+
+    <nav>
+      <h1>Tour of the Solar System</h1>
+
+      <!-- <a href="<%= planets_path %>">All Planets</a> -->
+
+      <%= link_to 'All Planets', planets_path %>
+      |
+      <%= link_to 'Create Planet', new_planet_path %>
+
+      <!-- <%= link_to '/something/' do %>
+        <img src="http://www.fillmurray.com/200/200">
+      <% end %> -->
+
+      <hr>
+    </nav>
+
+    <%= yield %>
+
+    <footer>
+      <hr>
+      &copy; Star Child Productions 2001
+    </footer>
+
+  </body>
+</html>

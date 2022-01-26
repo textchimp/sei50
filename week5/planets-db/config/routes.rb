@@ -56,7 +56,7 @@ Rails.application.routes.draw do
   # Just perform destroy by ID, and redirect
   # ROUTE: GET /planets/:id/delete
   # CONTROLLER ACTION: planets#destroy
-  # TEMPLATE: n/a  (redirect)
+  # TEMPLATE: n/a  (redirect)    # commit test
   # AR QUERY: Planet.destroy params[:id]
   get '/planets/:id/delete' => 'planets#destroy', as: 'destroy_planet'
 

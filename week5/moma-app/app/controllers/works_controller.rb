@@ -6,7 +6,8 @@ class WorksController < ApplicationController
 
   def create
     # raise 'hell'
-    Work.create work_params  # we need to create 'work_params'
+    Work.create! work_params
+    redirect_to works_path  # back to index
   end
 
   # READ
@@ -20,12 +21,18 @@ class WorksController < ApplicationController
   end
 
   def edit
+    @work = Work.find params[:id]
   end
 
   def update
+    work = Work.find params[:id]
+    work.update! work_params   # use strong params from create
+    redirect_to work_path(params[:id])
   end
 
   def destroy
+    Work.destroy params[:id]
+    redirect_to works_path  # back to index
   end
 
   private

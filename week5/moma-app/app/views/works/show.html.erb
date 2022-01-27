@@ -10,6 +10,10 @@
   (b. <%= @work.artist.dob.year %>)
 </h4>
 
+<%= link_to 'Edit', edit_work_path(@work) %>
+|
+<%= link_to 'Delete', work_path(@work), method: 'delete' %>
+
 <p>
   <strong>Medium:</strong>
   <%= @work.medium %>

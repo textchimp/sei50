@@ -26,6 +26,21 @@
   <%= f.text_field :image %>
   <br><br>
 
+
+  <%= f.label :artist_id %>
+  <%= f.collection_select :artist_id, Artist.all, :id, :name, include_blank: true %>
+
+  <!-- <select name="work[artist_id]">
+    <% Artist.all.each do |a| %>
+       <option value="<%= a.id %>"><%= a.name %></option>
+    <% end %>
+  </select> -->
+
+
+
+
+  <br><br>
+
   <%= f.submit %>
 
 

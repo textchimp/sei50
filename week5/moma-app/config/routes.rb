@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  
   # root 'pages#home' # also works?!
   root to: 'pages#home'
 
@@ -35,6 +36,11 @@ Rails.application.routes.draw do
   # Destroy artist by ID, redirect
   # get '/artists/:id/delete' => 'artists#destroy'
   delete '/artists/:id' => 'artists#destroy'
+
+
+
+  # Routes for the Work model
+  resources :works
 
 
 end

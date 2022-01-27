@@ -31,6 +31,12 @@
   <%= @artist.bio %>
 </p>
 
+<!--
+  TODO: show a list of works for this artist, which
+  link to the show page for each work.
+  Why not show thumbnail images for each of them?
+ -->
+
 <% if @artist.image.present? %>
   <%= image_tag @artist.image, alt: @artist.name, class: 'artist_image' %>
 <% end %>

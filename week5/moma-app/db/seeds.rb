@@ -5,7 +5,7 @@
 
 Artist.destroy_all
 
-Artist.create!(
+lee = Artist.create!(
   name: 'Lee Krasner',
   nationality: 'USA',
   dob: '1908/10/27',    # MUST use the right string format for this date!
@@ -15,7 +15,7 @@ Artist.create!(
   bio: 'Abstract Expressionist'
 )
 
-Artist.create!(
+max = Artist.create!(
   name: 'Max Ernst',
   nationality: 'German',
   dob: '1891/04/02',    # MUST use the right string format for this date!
@@ -25,7 +25,7 @@ Artist.create!(
   bio: 'Surrealist'
 )
 
-Artist.create!(
+jenny = Artist.create!(
   name: 'Jenny Holzer',
   nationality: 'USA',
   dob: '1950/05/15',    # MUST use the right string format for this date!
@@ -50,7 +50,8 @@ Work.create!(
   year: '1961',
   medium: 'oil on canvas',
   style: 'abstract expressionism',
-  image: 'http://www.tate.org.uk/art/images/work/T/T03/T03291_10.jpg'
+  image: 'http://www.tate.org.uk/art/images/work/T/T03/T03291_10.jpg',
+  artist_id: lee.id    # use the variable that stores the result of Artist.create!() for Lee Krasner
 )
 
 Work.create!(
@@ -58,7 +59,8 @@ Work.create!(
   year: '1988',
   medium: 'text',
   style: 'conceptual/text',
-  image: 'https://www.sleek-mag.com/wp-content/uploads/2019/03/jenny-holzer-protect-me-times-square.jpg'
+  image: 'https://www.sleek-mag.com/wp-content/uploads/2019/03/jenny-holzer-protect-me-times-square.jpg',
+  artist_id: jenny.id
 )
 
 Work.create!(
@@ -66,7 +68,8 @@ Work.create!(
   year: '1998',
   medium: 'text on bronze plaque',
   style: 'conceptual/text',
-  image: 'https://www.moma.org/media/W1siZiIsIjIwMTQ4NiJdLFsicCIsImNvbnZlcnQiLCItcXVhbGl0eSA5MCAtcmVzaXplIDIwMDB4MjAwMFx1MDAzZSJdXQ.jpg?sha=f4a128f8dd237338'
+  image: 'https://www.moma.org/media/W1siZiIsIjIwMTQ4NiJdLFsicCIsImNvbnZlcnQiLCItcXVhbGl0eSA5MCAtcmVzaXplIDIwMDB4MjAwMFx1MDAzZSJdXQ.jpg?sha=f4a128f8dd237338',
+  artist_id: jenny.id
 )
 
 Work.create!(
@@ -74,7 +77,8 @@ Work.create!(
   year: '1930',
   medium: 'oil on wood',
   style: 'surrealism/cubism',
-  image: 'https://i0.wp.com/www.guggenheim.org/wp-content/uploads/1914/01/48.1172.280_web.jpg?w=870'
+  image: 'https://i0.wp.com/www.guggenheim.org/wp-content/uploads/1914/01/48.1172.280_web.jpg?w=870',
+  artist_id: max.id
 )
 
 Work.create!(
@@ -82,7 +86,8 @@ Work.create!(
   year: '1946',
   medium: 'oil on canvas',
   style: 'surrealism',
-  image: 'http://www.dandy-club.com/wp-content/uploads/2013/01/main.jart2_.jpg'
+  image: 'http://www.dandy-club.com/wp-content/uploads/2013/01/main.jart2_.jpg',
+  artist_id: max.id
 )
 
 

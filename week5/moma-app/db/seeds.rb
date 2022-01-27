@@ -34,3 +34,8 @@ Artist.create!(
   roundness: 5,
   bio: 'Conceptual/Text'
 )
+
+
+# Some feedback for the terminal
+puts "Done! Created #{ Artist.count } artists:"
+puts Artist.pluck( :name ).join( ', ' )

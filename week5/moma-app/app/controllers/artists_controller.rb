@@ -43,12 +43,22 @@ class ArtistsController < ApplicationController
   end
 
   def edit
+    @artist = Artist.find params[:id]
   end
 
   def update
+    # raise 'hell'
+
+    artist = Artist.find params[:id]
+    artist.update artist_params
+
+    redirect_to artist_path( params[:id] )
   end
 
   def destroy
+    # raise 'hell'
+    Artist.destroy params[:id]
+    redirect_to artists_path   # back to index
   end
 
   # "private" methods in a class are ONLY visible

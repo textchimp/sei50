@@ -24,12 +24,17 @@ Rails.application.routes.draw do
   # Update
 
   # 1. Pre-filled form
+  get '/artists/:id/edit' => 'artists#edit', as: 'edit_artist'
+
   # 2. Form submit, update, redirect
+  patch '/artists/:id' => 'artists#update'
 
 
   # Delete
 
   # Destroy artist by ID, redirect
+  # get '/artists/:id/delete' => 'artists#destroy'
+  delete '/artists/:id' => 'artists#destroy'
 
 
 end

@@ -39,3 +39,56 @@ Artist.create!(
 # Some feedback for the terminal
 puts "Done! Created #{ Artist.count } artists:"
 puts Artist.pluck( :name ).join( ', ' )
+
+
+
+Work.destroy_all
+
+
+Work.create!(
+  title: 'Gothic Landscape',
+  year: '1961',
+  medium: 'oil on canvas',
+  style: 'abstract expressionism',
+  image: 'http://www.tate.org.uk/art/images/work/T/T03/T03291_10.jpg'
+)
+
+Work.create!(
+  title: 'Protect Me From What I Want',
+  year: '1988',
+  medium: 'text',
+  style: 'conceptual/text',
+  image: 'https://www.sleek-mag.com/wp-content/uploads/2019/03/jenny-holzer-protect-me-times-square.jpg'
+)
+
+Work.create!(
+  title: 'Some Days You Wake Up...',
+  year: '1998',
+  medium: 'text on bronze plaque',
+  style: 'conceptual/text',
+  image: 'https://www.moma.org/media/W1siZiIsIjIwMTQ4NiJdLFsicCIsImNvbnZlcnQiLCItcXVhbGl0eSA5MCAtcmVzaXplIDIwMDB4MjAwMFx1MDAzZSJdXQ.jpg?sha=f4a128f8dd237338'
+)
+
+Work.create!(
+  title: 'City with Animals',
+  year: '1930',
+  medium: 'oil on wood',
+  style: 'surrealism/cubism',
+  image: 'https://i0.wp.com/www.guggenheim.org/wp-content/uploads/1914/01/48.1172.280_web.jpg?w=870'
+)
+
+Work.create!(
+  title: 'Die Versuchung des heiligen Antonius',
+  year: '1946',
+  medium: 'oil on canvas',
+  style: 'surrealism',
+  image: 'http://www.dandy-club.com/wp-content/uploads/2013/01/main.jart2_.jpg'
+)
+
+
+
+
+
+
+puts "Done! Created #{ Work.count } works:"
+puts Work.pluck(:title).join(', ')

@@ -10,4 +10,6 @@ class Song < ApplicationRecord
   # Many-to-many association with Genre
   has_and_belongs_to_many :genres
 
+  has_and_belongs_to_many :mixtapes
+
 end

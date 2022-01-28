@@ -103,3 +103,49 @@ s4.genres << g3 << g4
 # Because this is a many-to-many, you could also start
 # from the other end of the association
 #   g1.songs << s1 << s3 << s5
+
+# Test the genres >-< songs associations:
+puts "Genre '#{ g3.name }' has songs: #{ g3.songs.pluck(:title).join(', ') }"
+puts "Song '#{s4.title}' has genres: #{ s4.genres.pluck(:name).join(', ') } "
+
+####################################################
+
+print "Creating mixtapes... "
+
+Mixtape.destroy_all
+
+m1 = Mixtape.create! name: 'Code Jams'
+m2 = Mixtape.create! name: 'Lockdown Blues'
+m3 = Mixtape.create! name: 'Make-out Music'
+
+puts "created #{ Mixtape.count } mixtapes."
+
+# Create "songs >-< mixtapes" associations, i.e. add songs to mixtapes
+m1.songs << s1 << s2 << s3 << s4
+m2.songs << s3 << s4
+m3.songs << s1 << s2
+
+# You could also write 's1.mixtapes << m1 << m3'   etc
+
+# Test associations:
+puts "Mixtape '#{ m1.name} ' has the songs: #{ m1.songs.pluck(:title).join(', ') } "
+puts "Song '#{ s3.title }' is on mixtapes: #{ s3.mixtapes.pluck(:name).join(', ') } "
+
+##############################################
+
+print "Creating users... "
+
+User.destroy_all
+
+u1 = User.create! email: 'luke@ga.co', name: 'Luke', password: 'chicken'
+u2 = User.create! email: 'ro@ga.co', name: 'Rowena', password: 'chicken'
+u3 = User.create! email: 'lay@ga.co', name: 'Lay', password: 'chicken'
+
+puts "created #{ User.count } users."
+
+# Add user -< mixtapes associations
+u1.mixtapes << m1 << m3
+u2.mixtapes << m2
+
+puts "User #{ User.first.name } has mixtapes: #{ User.first.mixtapes.pluck(:name).join(', ') }"
+puts "Mixtape '#{ Mixtape.first.name }' belongs to #{ Mixtape.first.user.name }"

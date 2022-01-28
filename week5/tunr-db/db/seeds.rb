@@ -21,3 +21,13 @@ art2 = Artist.create! name: 'Metz'
 art3 = Artist.create! name: 'Radiohead'
 
 puts "created #{ Artist.count } artists."
+
+
+##################################################
+
+print "Creating albums... "
+
+Album.destroy_all
+
+alb1 = Album.create! title: 'Some Gave All', year: '1992'
+alb2 = Album.create! title: 'Atlas Vending', year: '1992'

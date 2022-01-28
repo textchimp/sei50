@@ -58,3 +58,48 @@ alb2 = Album.create! title: 'Atlas Vending', year: '2021'
 alb3 = Album.create! title: 'A Moon-Shaped Pool', year: '2016'
 
 puts "created #{ Album.count } albums."
+
+# Create assocation from songs to albums
+alb1.songs << s1
+
+alb2.songs  << s2
+
+alb3.songs << s3 << s4
+
+puts "Testing album -< songs association:"
+puts "  • the song '#{ Song.first.title }' is on the album '#{ Song.first.album.title}' "
+puts "  • the album '#{ Album.last.title}' has the songs: #{ Album.last.songs.pluck(:title).join(', ') }  "
+
+
+########################################################################
+
+print "Creating genres... "
+
+Genre.destroy_all
+
+g1 = Genre.create! name: 'Post Punk'
+g2 = Genre.create! name: 'Math Rock'
+g3 = Genre.create! name: 'Paranoid Art Rock'
+g4 = Genre.create! name: 'Sadcore'
+g5 = Genre.create! name: 'Country'
+g6 = Genre.create! name: 'IDM'
+
+puts "created #{ Genre.count }  genres."
+
+# Create Genre >-< Song many-to-many assocations:
+
+# s1 ('Achy Breaky Heart') is in the genre g4 ('Country')
+# In other words, in the join table 'genres_rows', create a new
+# row with song_id = s1.id, and genre_id = g5.id
+s1.genres << g5
+
+# This creates THREE rows in the 'genres_songs' join table
+s2.genres << g1 << g2 << g4
+
+s3.genres << g3 << g4 << g6
+
+s4.genres << g3 << g4
+
+# Because this is a many-to-many, you could also start
+# from the other end of the association
+#   g1.songs << s1 << s3 << s5

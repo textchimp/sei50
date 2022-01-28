@@ -5,5 +5,9 @@ class Song < ApplicationRecord
   # to be optional when we create a Song
   belongs_to :artist, optional: true
 
+  belongs_to :album, optional: true
+
+  # Many-to-many association with Genre
+  has_and_belongs_to_many :genres
 
 end

@@ -33,4 +33,20 @@ class ApplicationController < ActionController::Base
   end  # fetch_user()
 
 
+
+  def check_if_logged_in
+    # If the current request (which could be any action of any controller)
+    # is coming from a user who is NOT logged in, redirect them to the
+    # login page
+    # Any controller actions that should be available only to logged-in
+    # users can then run this method as a before_action to protect
+    # access - i.e. we can lock down certain actions (routes)
+
+    unless @current_user.present?
+      flash[:error] = 'You must be logged in to perform that action.'
+      redirect_to login_path
+    end # login check
+
+  end  # check_if_logged_in()
+
 end  # class ApplicationController

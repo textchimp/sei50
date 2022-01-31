@@ -20,11 +20,19 @@
          Welcome, <%= @current_user.name %>
          |
          <%= link_to 'Logout', login_path, method: 'delete' %>
+         |
+         <%= link_to 'Create Mixtape', new_mixtape_path %>
        <% else %>
+
          <%= link_to 'Login', login_path %>
          |
          <%= link_to 'Sign Up', '/does-not-exist-yet' %>
+
        <% end %>
+
+       |
+       <%= link_to 'Mixtapes Index', mixtapes_path %>
+
 
       <hr>
     </nav>

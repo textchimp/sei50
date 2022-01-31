@@ -1,6 +1,17 @@
 
 <h2>Login</h2>
 
+
+
+<% if flash[:error] %>
+  <br>
+  <strong>
+    <%= flash[:error] %>
+  </strong>
+  <br>
+  <br>
+<% end %>
+
 <%#
   We can also use the form_with helper for generic forms that do NOT correspond to a model;
   to do this, we use 'url: SOME_URL_HERE' instead of 'model: @YOURMODEL'

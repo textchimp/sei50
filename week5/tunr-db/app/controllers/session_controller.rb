@@ -14,15 +14,27 @@ class SessionController < ApplicationController
     if user.present? && user.authenticate( params[:password] )
 
       # credentials are correct - successful login!
-      raise 'CORRECT!'
+      session[:user_id] = user.id
+
+      redirect_to root_path   # back to the home page
 
     else
 
       # Either the was nil (no such email address), or the password entered into
       # the login form, when encrypted, did not match the password_digest stored
       # for this account
-      raise 'NOPE!'
 
+
+      # The flash hash is a bit like 'session' in that it is remembered across
+      # page requests, i.e. into the future - BUT ONLY for the very next page
+      # load, and then not beyond that. This allows us to show error or status
+      # messages about something that happened on the previous request - i.e.
+      # show an error message when redirected to this login fon (or, for example
+      # when successfully creating an item and being redirected to the index
+      # page we can say 'Item created successfully').
+      flash[:error] = 'Invalid email or password'
+
+      redirect_to login_path
 
     end # credentials check
 

@@ -14,7 +14,7 @@ class SessionController < ApplicationController
     if user.present? && user.authenticate( params[:password] )
 
       # credentials are correct - successful login!
-      session[:user_id] = user.id
+      session[:user_id] = user.id   # ALSO DO THIS WHEN creating a new user!
 
       redirect_to root_path   # back to the home page
 

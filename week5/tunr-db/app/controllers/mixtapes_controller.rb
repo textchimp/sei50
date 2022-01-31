@@ -42,10 +42,40 @@ class MixtapesController < ApplicationController
   end
 
   def edit
+    @mixtape = Mixtape.find params[:id]
+
+    # Check that the user is allowed to edit this Mixtape
+    # (i.e. they created it) - and if not, show them the door
+    redirect_to login_path  unless @mixtape.user_id == @current_user.id
   end
 
+
   def update
-  end
+
+    @mixtape = Mixtape.find params[:id]
+
+
+    # Don't perform the edit on the item (i.e. don't change the DB)
+    # if the logged in user is not the owner
+    if @mixtape.user_id != @current_user.id
+      redirect_to login_path  # THIS IS NOT ENOUGH - rest of action still tries to run
+      return  # this prevents the update below from happening
+    end
+
+    # redirect_to login_path and return unless @mixtape.user_id == @current_user.id
+
+    # Check if the update worked - it might fail due to the same validation errors
+    # as the create
+    if @mixtape.update mixtape_params
+      redirect_to mixtape_path(@mixtape)
+    else
+      render :edit  # show the edit form again, pre-filled (and also with @mixtape.errors)
+    end
+
+
+  end # update
+
+
 
   def destroy
   end

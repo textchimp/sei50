@@ -1,5 +1,16 @@
 
 
+<% if @mixtape.errors.any? %>
+  <strong>Please correct the following errors:</strong>
+  <ul>
+    <% @mixtape.errors.full_messages.each do |e| %>
+      <li>
+        <%= e %>
+      </li>
+    <% end %><%# each %>
+  </ul>
+<% end %><%# if %>
+
 <%= form_with model: @mixtape, local: true do |f| %>
 
   <%= f.label :name %>

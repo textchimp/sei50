@@ -1,2 +1,13 @@
-<h1>Mixtapes#index</h1>
-<p>Find me in app/views/mixtapes/index.html.erb</p>
+
+<h2>All Mixtapes</h2>
+
+<ul>
+  <% @mixtapes.each do |mix| %>
+    <li>
+      <%= link_to mix.name, mixtape_path(mix) %>
+      <% if @current_user.present? && mix.user_id == @current_user.id %>
+        (<%= link_to 'Edit', edit_mixtape_path(mix.id) %>)
+      <% end %>
+    </li>
+  <% end %>
+</ul>

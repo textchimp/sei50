@@ -1,2 +1,7 @@
 <h1>Mixtapes#show</h1>
-<p>Find me in app/views/mixtapes/show.html.erb</p>
+
+<%= @mixtape.name %>
+<br>
+<br>
+
+<%= cl_image_tag @mixtape.image, alt: @mixtape.name %>

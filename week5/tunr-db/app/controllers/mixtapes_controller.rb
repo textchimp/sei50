@@ -11,8 +11,19 @@ class MixtapesController < ApplicationController
     # mixtape.user_id = @current_user.id  # OR: mixtape.user = @current_user
     # mixtape.save  # NOT saved to the DB until we do this!
 
+    # raise 'hell'
+
     @mixtape = Mixtape.new mixtape_params
     @mixtape.user_id = @current_user.id
+
+    if params[:mixtape][:image].present?
+      # Forward the uploaded image on to Cloudinary (using the gem):
+      response = Cloudinary::Uploader.upload params[:mixtape][:image]
+      # p response  # so we can see what the response looks like
+      @mixtape.image = response['public_id'] # add to the item we are saving
+    end  # upload check
+
+
     @mixtape.save
 
     # Did the above save work, or did it fail due to a validation error?
@@ -39,6 +50,7 @@ class MixtapesController < ApplicationController
   end
 
   def show
+    @mixtape = Mixtape.find params[:id]
   end
 
   def edit

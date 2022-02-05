@@ -36,6 +36,16 @@
   link to the show page for each work.
   Why not show thumbnail images for each of them?
  -->
+<% if @artist.works.any? %>
+  <strong>Works:</strong>
+  <ul>
+    <% @artist.works.each |work| %>
+      <li>
+        <%= link_to work.title, work_path(work.id) %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
 
 <% if @artist.image.present? %>
   <%= image_tag @artist.image, alt: @artist.name, class: 'artist_image' %>

@@ -1,52 +1,60 @@
 
-console.log('Loaded!');
+
+const loadTrivia = function(){
+
+  const xhr = new XMLHttpRequest(); // make a new instance
 
 
-const sayHello = function(){
-  console.log('Oh hello!');
-  // no 'return' statement in JS means default return
-  // of undefined
-}; // sayHello()
+  // This is the ancient way of attaching callbacks to
+  // handle events: an object (like a DOM node) has a
+  // bunch of 'onXXXXXXX' properties, which you can
+  // store functions in - your function will be run
+  // by the browser at the appropriate time, i.e in
+  // response to the event firing;
+  // in this example, the event is that we have
+  // received some data from the remote server
+  // xhr.onreadystatechange = function(){
+  //   console.log('onreadystatechange callback running!');
+  //   console.log('state:', xhr.readyState);
+  //
+  //   if( xhr.readyState === 4 ){
+  //     // 4 means DONE, so we have all the response data
+  //     console.log('data', xhr.response);
+  //   }
+  //
+  // }; // onreadystatechange callback
+
+  xhr.onload = function(){
+
+    // Use JSON.parse() to turn the response
+    // WHICH IS JUST A JSON STRING, not an object,
+    // into a real JS object with keys and values
+    const data = JSON.parse( xhr.response );
+
+    console.log('data:', data.text);
+
+    $('#output').html(`<p>${data.text}</p>`); // add to the page!
+
+  } // onload callback
 
 
-const runNicely = function( functionToRun ){
-  console.log('Hi let me run nicely etc');
-  console.log('function to run:', functionToRun);
-  functionToRun();
-  console.log('It was so nice etc etc...');
-}; // runNicely()
+  const userQuery = $('#userQuery').val(); // get form input contents
 
-// Give runNicely a pre-defined function
-runNicely( sayHello );
+  xhr.open('GET', `http://www.numbersapi.com/${ userQuery }?json`);
+  xhr.send(); // This line DOES NOT BLOCK, unlike Ruby
 
-// Give runNicely an anonymous/inline function
-runNicely(  function(){
-  console.log('This is an inline/anonymous function');
-}  )
-
-// arr.forEach( function(item){
-//   console.log( item );
-// });
-//
-// // What is Ruby's equivalent of an anonymous function?
-// arr.each do |item|
-//   puts item
-// end
-
-// Write your implementation of the each method:
+  // console.log('This line runs BEFORE we get a response... too soon!'); // asynchronous
 
 
-const each = function( array, callback ){
-  // YOU DO THIS
-};
+}; // loadTrivia()
 
-const arr = [ 'first', 'second', 'third' ];
 
-each(arr, function( item ){
-  console.log('Inside callback: ', item);
-})
-// Output:
-//
-// Inside callback: first
-// Inside callback: second
-// Inside callback: third
+$(function(){
+  console.log('DOM is loaded!');
+  //loadTrivia();
+
+  $('#loadMore').on('click', function(){
+    loadTrivia();
+  }); // click handler
+
+}); // document ready callback

@@ -1,5 +1,4 @@
 
-
 const loadTrivia = function(){
 
   const xhr = new XMLHttpRequest(); // make a new instance
@@ -30,6 +29,10 @@ const loadTrivia = function(){
     // WHICH IS JUST A JSON STRING, not an object,
     // into a real JS object with keys and values
     const data = JSON.parse( xhr.response );
+
+    // HELPFUL FOR DEBUGGING: set into global variable
+    window.response = data;
+
 
     console.log('data:', data.text);
 

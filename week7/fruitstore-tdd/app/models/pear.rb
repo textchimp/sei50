@@ -6,6 +6,10 @@
 # This causes Pear to not need its own table -
 # it just uses the 'fruits' table
 
+# This is called 'Single Table Inheritance' and
+# it's the reason you can't have a table
+# column called "type"
+
 class Pear < Fruit
 
 end

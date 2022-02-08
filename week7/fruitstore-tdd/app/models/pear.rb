@@ -12,6 +12,8 @@
 
 class Pear < Fruit
 
+  validates :name, presence: true, uniqueness: true
+
   def squishy?
     true
   end

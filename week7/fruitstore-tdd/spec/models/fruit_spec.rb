@@ -10,7 +10,8 @@ RSpec.describe Fruit, type: :model  do
   # ideally contain just the assertions
   # (and sometimes specific Actions)
   before do
-    Pear.create name: 'nashi', price: 2
+    shelf = Shelf.create name: 'test shelf'
+    Pear.create name: 'nashi', price: 2, shelf_id: shelf.id
     @pear_retrieved = Pear.first
   end
 
@@ -55,15 +56,36 @@ RSpec.describe Fruit, type: :model  do
      expect( Pear.count ).to eq 1
    end
 
+
    it 'should be squishy (if a Pear)' do
      expect( @pear_retrieved.squishy? ).to eq true
    end
 
+
    it 'should not be squishy (if a base Fruit)' do
-     Fruit.create name: 'test Fruit'
-     expect( Fruit.last.squishy? ).to eq false
+     fruit = Fruit.create name: 'test Fruit'
+     expect( fruit.squishy? ).to eq false
    end
 
+
+   # Test AR model validations
+
+   it 'should fail validation when created without a name' do
+     pear = Pear.create
+     expect( pear ).to be_invalid
+     # expect( pear.invalid? ).to eq true
+   end
+
+   it 'should validate the uniqueness of the name' do
+     pear_duplicate = Pear.create name: 'nashi' # same as @pear_retrieved created in before block
+     expect( pear_duplicate ).to be_invalid
+   end
+
+
+   # Test the association: a Fruit belongs_to a Shelf
+   # Note the one-line version of the 'it' block - no description string,
+   # RSpec can work it out from the context
+   it { should belong_to(:shelf)  }
 
 
 end # RSpec.describe Fruit

@@ -22,6 +22,28 @@ const fetchSearchResults = function( searchText ){
 
 const renderSearchResults = function( data ){
   console.log('renderSearchResults()', data);
+  const $output = $('#output');
+
+  $output.html(`<p>${ data.total_results } matches found:</p>`);
+
+  let movies = '<ul>';
+
+  data.results.forEach( function( movie ){
+    // console.log( movie );
+    movies += `
+      <li>
+        <img src="http://image.tmdb.org/t/p/w185${ movie.poster_path }" alt="${ movie.title }"> 
+        <br>
+        ${ movie.title }
+      </li>
+    `;
+  });
+
+  movies += '</ul>';
+
+  $output.append( movies );
+
+
 }; // renderSearchResults()
 
 

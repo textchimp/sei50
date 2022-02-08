@@ -87,6 +87,10 @@ RSpec.describe FruitsController, type: :controller do
         expect( Fruit.count ).to eq 0
       end
 
+      it 'should render the #new template' do
+        expect( response ).to render_template( :new )
+      end
+
     end # invalid fruit
 
 

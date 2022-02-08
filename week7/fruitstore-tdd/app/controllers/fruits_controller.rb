@@ -7,8 +7,13 @@ class FruitsController < ApplicationController
 
   def create
     fruit = Fruit.create fruit_params
-    redirect_to fruit   # this means the :show route for this object
-  end
+    if fruit.persisted?
+      redirect_to fruit   # this means the :show route for this object
+    else 
+      render :new
+    end
+
+  end # create()
 
 
   private

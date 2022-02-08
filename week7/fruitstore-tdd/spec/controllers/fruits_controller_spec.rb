@@ -70,6 +70,26 @@ RSpec.describe FruitsController, type: :controller do
 
     end # valid fruit
 
+
+    describe 'a fruit with invalid information' do
+
+      before do
+        # Fake a form POST which creates a new Fruit
+        post :create, params: {
+          fruit: {
+            name: '', # INVALID!
+            shelf_id: Shelf.create( name: 'test').id
+          }
+        }
+      end # before
+
+      it 'should not increase the number of fruits in the DB' do
+        expect( Fruit.count ).to eq 0
+      end
+
+    end # invalid fruit
+
+
   end # POST to #create
 
 

@@ -43,30 +43,32 @@ RSpec.describe FruitsController, type: :controller do
 
   describe 'POST to #create' do
 
-    before do
-      # Fake a form POST which creates a new Fruit
-      post :create, params: {
-        fruit: {
-          name: 'Strawberry',
-          shelf_id: Shelf.create( name: 'test').id
+    describe 'a fruit with valid information' do
+
+      before do
+        # Fake a form POST which creates a new Fruit
+        post :create, params: {
+          fruit: {
+            name: 'Strawberry',
+            shelf_id: Shelf.create( name: 'test').id
+          }
         }
-      }
-    end # before
+      end # before
 
-    it 'should increase the number of fruits in the DB by 1' do
-      expect( Fruit.count ).to eq 1
-    end
+      it 'should increase the number of fruits in the DB by 1' do
+        expect( Fruit.count ).to eq 1
+      end
 
-    it 'should create a Fruit using the correct form field' do
-      expect( Fruit.first.name ).to eq 'Strawberry'
-    end
-
-
-    it 'should redirect to the show action for the created fruit' do
-      expect( response ).to redirect_to( Fruit.first )
-    end
+      it 'should create a Fruit using the correct form field' do
+        expect( Fruit.first.name ).to eq 'Strawberry'
+      end
 
 
+      it 'should redirect to the show action for the created fruit' do
+        expect( response ).to redirect_to( Fruit.first )
+      end
+
+    end # valid fruit
 
   end # POST to #create
 

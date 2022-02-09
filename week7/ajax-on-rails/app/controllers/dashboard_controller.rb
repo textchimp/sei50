@@ -38,4 +38,15 @@ class DashboardController < ApplicationController
   end # uptime()
 
 
+  def cpu_hog
+
+    @hog = `ps xr`.split("\n").second
+
+    render json: {
+      hog: @hog 
+    }
+
+  end #cpu_hog
+
+
 end # class DashboardController

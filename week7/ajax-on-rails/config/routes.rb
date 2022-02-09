@@ -9,5 +9,9 @@ Rails.application.routes.draw do
 
   get '/uptime' => 'dashboard#uptime'
 
+  get '/cpuhog' => 'dashboard#cpu_hog'
+
+  # Message MODEL API endpoints (still use CRUD conventions)
+
 
 end

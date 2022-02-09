@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  # DELETE JUNK
+
   # root to: 'dashboard#home'
 
   # SPA home route:
@@ -11,7 +13,12 @@ Rails.application.routes.draw do
 
   get '/cpuhog' => 'dashboard#cpu_hog'
 
-  # Message MODEL API endpoints (still use CRUD conventions)
+  # Message model API endpoints (still use CRUD conventions)
+  get '/messages'     => 'messages#index'
+  get '/messages/:id' => 'messages#show'
+
+  # Custom route, not really CRUD
+  get '/messages/search/:query' => 'messages#search'
 
 
 end

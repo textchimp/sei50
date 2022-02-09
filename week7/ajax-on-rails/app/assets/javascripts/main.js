@@ -18,14 +18,31 @@ $(function(){
     });
 
 
-    // CPU HOG
-    axios.get('/cpuhog')
-      .then( function( res ){
-        console.log('cpuhog', res.data );
-        $('#hog').html( res.data.hog )
+  // CPU HOG
+  axios.get('/cpuhog')
+    .then( function( res ){
+      console.log('cpuhog', res.data );
+      $('#hog').html( res.data.hog )
+    })
+    .catch( function( err ){
+      console.log('CPU Hog AJAX error:', err );
+    });
+
+  // INDEX OF MESSAGES (i.e. results of Message.all)
+  axios.get('/messages')
+    .then( function( res ){
+      // console.log('messages data', res.data);
+      $('#messagesIndex').empty();
+      res.data.forEach( function( message ){
+        // console.log(message);
+        $('#messagesIndex').append(`
+          <li>${ message.content } (${message.user_id})</li>
+        `);
+      }); // each message
+
       })
       .catch( function( err ){
-        console.log('CPU Hog AJAX error:', err );
+        console.log('Messages AJAX error', err);
       });
 
 }); // DOM ready handler

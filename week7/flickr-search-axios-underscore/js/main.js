@@ -21,6 +21,8 @@ let searchFormNode, searchInputNode, resultsNode, detailsNode;
 
 const fetchSearchResults = async (queryText) => {
 
+  console.log('in fetchSearchResults()', queryText);
+
   try {
 
     const res = await axios.get( FLICKR_BASE_URL, {
@@ -58,10 +60,20 @@ const fetchSearchResults = async (queryText) => {
 const renderSearchResults = (results) => {
   console.log('in renderSearchResults()', results);
   // results.photo.forEach( console.log );
+
+  const ulNode = document.createElement('ul'); // create the container
+
   results.photo.forEach( photo => {
     const imageURL = generateImageURL(photo);
-    console.log( imageURL );
-  });
+    // console.log( imageURL );
+    const liNode = document.createElement('li');
+    liNode.innerHTML = `
+      <img src="${ imageURL }" alt="${ photo.title }">
+    `;
+    ulNode.appendChild( liNode ); // add to the <ul> container node
+  }); // for each photo
+
+  resultsNode.appendChild( ulNode ); // add the <ul> to the actual DOM
 
 }; // renderSearchResults()
 
@@ -76,19 +88,20 @@ const generateImageURL = (photo) => {
 
 document.addEventListener('DOMContentLoaded', function(){
 
-  // fetchSearchResults('coral ocean');
   searchFormNode = document.querySelector('#searchForm');
   searchInputNode = document.querySelector('#searchText');
   resultsNode = document.querySelector('#results');
   detailsNode = document.querySelector('#details');
   // $('#details') MISS U SO BAD GURL
 
-  searchInputNode.focus();
+  searchInputNode.focus(); // quick submit by pressing enter
 
   searchFormNode.addEventListener('submit', ev => {
     ev.preventDefault(); // stop form from reloading page
-    console.log('Form submitted!');
-  });
+    // const searchText = searchInputNode.value;
+    // console.log('Form submitted!', searchText);
+    fetchSearchResults( searchInputNode.value );
+  }); // form submit handler
 
 
 }); // document ready handler

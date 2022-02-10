@@ -13,36 +13,51 @@ const FLICKR_BASE_URL = 'https://api.flickr.com/services/rest';
 
 // $(function(){
 
-document.addEventListener('DOMContentLoaded', async function(){
+const fetchSearchResults = async (queryText) => {
 
   try {
 
-    const res = await axios.get( 'FLICKR_BASE_URL', {
+    const res = await axios.get( FLICKR_BASE_URL, {
       params: {
         // axios will combine these key-value pairs into the querystring for us
         method: 'flickr.photos.search',
         api_key: FLICKR_API_KEY,
         format: 'json',
         nojsoncallback: 1,
-        text: 'coral ocean' // should come from user input
+        text: queryText // should come from user input
       }
     });
 
     // BECAUSE we used await axios.get, we don't need callbacks, and
     // we can be sure the result will be available by the next line of
     // code after the .get(), because JS *waits* for the promise to resolve
-    console.log('data', res.data.photos.photo );
+    // console.log('data', res.data.photos.photo );
+    renderSearchResults( res.data.photos );
 
   } catch( err ){
      console.log('AJAX Search error', err);
   }
 
 
-    // .then( function( res ){
-    //   console.log( res.data.photos.photo );
-    // })
-    // .catch( function( err ){
-    //   console.log('AJAX Search error', err);
-    // });
+  // .then( function( res ){
+  //   console.log( res.data.photos.photo );
+  // })
+  // .catch( function( err ){
+  //   console.log('AJAX Search error', err);
+  // });
+
+}; // fetchSearchResults()
+
+
+const renderSearchResults = (results) => {
+  console.log('in renderSearchResults()', results);
+}; // renderSearchResults()
+
+
+
+
+document.addEventListener('DOMContentLoaded', function(){
+
+  fetchSearchResults('coral ocean');
 
 }); // document ready handler

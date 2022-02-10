@@ -51,6 +51,9 @@ const fetchSearchResults = async (queryText) => {
 
 const renderSearchResults = (results) => {
   console.log('in renderSearchResults()', results);
+  // results.photo.forEach( console.log );
+  results.photo.forEach( photo => console.log(photo.title) );
+
 }; // renderSearchResults()
 
 

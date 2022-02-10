@@ -72,7 +72,6 @@ const renderSearchResults = (results) => {
     `;
 
     liNode.addEventListener('click', ev => {
-      console.log('thumbnail clicked', liNode);
       // By adding a unique click handler function to each <li>
       // within the loop, the click handler function will STILL
       // have access to the surrounding variables in its scope
@@ -81,9 +80,16 @@ const renderSearchResults = (results) => {
       // This is because of a language feature called "closures":
       // function definitions "close over" the values of the variables
       // that exist in their surrouding scope when they are defined.
-      console.log('ID of result:', photo.id);
+      // PROS: we don't need to store an ID in a DOM tag attribute
+      // and retrieve it later
+      // CONS: we are creating a unique click handler function to
+      // attach to each of our 100 results, i.e. 100 functions...
+      // these add up in memory!
       fetchImageDetails( photo.id );
     });
+
+    // one-liner:
+    // liNode.addEventListener('click', () => fetchImageDetails(photo.id) );
 
     ulNode.appendChild( liNode ); // add to the <ul> container node
   }); // for each photo
@@ -112,6 +118,53 @@ const generateImageURL = (photo) => {
   return `https://live.staticflickr.com/${ photo.server }/${ photo.id }_${photo.secret}_q.jpg`
 
 }; // generateImageURL()
+
+
+const fetchImageDetails = async (id) => {
+  console.log('in fetchImageDetails():', id);
+
+  detailsNode.innerHTML = '<em>Loading...</em>';
+  detailsNode.style.display = 'block'; // in case we previously hid the details
+  resultsNode.style.display = 'none'; // hide the results
+
+  try {
+
+    const res = await axios.get( FLICKR_BASE_URL, {
+      params: {
+        method: 'flickr.photos.getInfo',
+        api_key: FLICKR_API_KEY,
+        photo_id: id,
+        format: 'json',
+        nojsoncallback: 1
+      }
+    });
+
+    console.log('Details results:', res.data );
+    renderImageDetails( res.data.photo );
+
+  } catch( err ){
+    console.log('Details AJAX request error', err);
+  }
+
+
+}; // fetchImageDetails()
+
+
+
+const renderImageDetails = (photo) => {
+  console.log('in renderImageDetails():', photo);
+
+  console.log( generateImageURL(photo) );
+
+
+  detailsNode.innerHTML = `
+    <h2>${ photo.title._content }</h2>
+    <img src="${ generateImageURL(photo) }" alt="${ photo.title._content }">
+  `;
+
+
+}; // renderPhotoDetails()
+
 
 
 

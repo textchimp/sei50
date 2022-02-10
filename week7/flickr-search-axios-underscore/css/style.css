@@ -10,7 +10,7 @@ li {
   cursor: pointer;
 }
 
-#results {
+#results, #details {
   text-align: center;
   margin: auto;
   margin-top: 2rem;

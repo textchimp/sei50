@@ -167,7 +167,9 @@ const renderImageDetails = (photo) => {
   `;
 
   document.querySelector('#backLink').addEventListener('click', () => {
-    console.log('back clicked!');
+    // console.log('back clicked!');
+    detailsNode.style.display = 'none';
+    resultsNode.style.display = 'block';
   });
 
 

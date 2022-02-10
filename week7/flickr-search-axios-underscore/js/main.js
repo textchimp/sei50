@@ -70,6 +70,21 @@ const renderSearchResults = (results) => {
     liNode.innerHTML = `
       <img src="${ imageURL }" alt="${ photo.title }">
     `;
+
+    liNode.addEventListener('click', ev => {
+      console.log('thumbnail clicked', liNode);
+      // By adding a unique click handler function to each <li>
+      // within the loop, the click handler function will STILL
+      // have access to the surrounding variables in its scope
+      // EVEN THOUGH THE FUNCTION RUNS MUCH LATER, AFTER THE LOOP
+      // IS FINISHED AND THE LOOP'S LOCAL VARIABLES ARE GONE
+      // This is because of a language feature called "closures":
+      // function definitions "close over" the values of the variables
+      // that exist in their surrouding scope when they are defined.
+      console.log('ID of result:', photo.id);
+      fetchImageDetails( photo.id );
+    });
+
     ulNode.appendChild( liNode ); // add to the <ul> container node
   }); // for each photo
 
@@ -81,6 +96,13 @@ const renderSearchResults = (results) => {
     // clear the "Loading" message (and also clear any previous search results)
 
   resultsNode.appendChild( ulNode ); // add the <ul> to the actual DOM
+
+  // Previously: AFTER adding to the DOM, we do a new query to retrieve
+  // all the search result <li> tags and add a single click handler to them -
+  // but in order for the click handler to know the ID of the image that
+  // was clicked, we have to store that ID in the DOM (i.e. as a data attribute
+  // of the <li> or <img> tag)
+
 
 }; // renderSearchResults()
 

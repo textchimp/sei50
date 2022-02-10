@@ -158,9 +158,17 @@ const renderImageDetails = (photo) => {
 
 
   detailsNode.innerHTML = `
+    <a href="#" id="backLink">Back to results</a>
     <h2>${ photo.title._content }</h2>
     <img src="${ generateImageURL(photo) }" alt="${ photo.title._content }">
+    <p>
+      ${ photo.description._content }
+    </p>
   `;
+
+  document.querySelector('#backLink').addEventListener('click', () => {
+    console.log('back clicked!');
+  });
 
 
 }; // renderPhotoDetails()
@@ -183,6 +191,10 @@ document.addEventListener('DOMContentLoaded', function(){
     // const searchText = searchInputNode.value;
     // console.log('Form submitted!', searchText);
     resultsNode.innerHTML = '<em>Loading results...</em>';
+
+    detailsNode.style.display = 'none';  // in case we were showing the details
+    resultsNode.style.display = 'block'; // in case we were hiding previously
+
     fetchSearchResults( searchInputNode.value );
   }); // form submit handler
 

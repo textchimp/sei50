@@ -32,6 +32,7 @@ const fetchSearchResults = async (queryText) => {
         api_key: FLICKR_API_KEY,
         format: 'json',
         nojsoncallback: 1,
+        // page: 2,  or some other variable?
         text: queryText // should come from user input
       }
     });
@@ -113,9 +114,9 @@ const renderSearchResults = (results) => {
 }; // renderSearchResults()
 
 
-const generateImageURL = (photo) => {
+const generateImageURL = (photo, size='q') => {
 
-  return `https://live.staticflickr.com/${ photo.server }/${ photo.id }_${photo.secret}_q.jpg`
+  return `https://live.staticflickr.com/${ photo.server }/${ photo.id }_${photo.secret}_${ size }.jpg`
 
 }; // generateImageURL()
 
@@ -154,13 +155,14 @@ const fetchImageDetails = async (id) => {
 const renderImageDetails = (photo) => {
   console.log('in renderImageDetails():', photo);
 
-  console.log( generateImageURL(photo) );
-
+  // const link = document.createElement('a');
+  // details.prependChild(link)
+  // link.addEventListener(...)
 
   detailsNode.innerHTML = `
     <a href="#" id="backLink">Back to results</a>
     <h2>${ photo.title._content }</h2>
-    <img src="${ generateImageURL(photo) }" alt="${ photo.title._content }">
+    <img src="${ generateImageURL(photo, 'b') }" alt="${ photo.title._content }">
     <p>
       ${ photo.description._content }
     </p>
@@ -202,3 +204,19 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
 }); // document ready handler
+
+
+window.addEventListener('scroll', ev => {
+  console.log('current window.scrollY', window.scrollY);
+  console.log('document.body.scrollHeight', document.body.scrollHeight);
+  console.log('---------------------');
+
+  // Have we reached the bottom?
+  const bottomOfWindow = window.scrollY + window.innerHeight;
+  if( bottomOfWindow >= document.body.scrollHeight * 0.9 ){
+    console.log('We have hit bottom (no jQuery)');
+    // start the next-page AJAX request a bit before the bottom...
+    // but YOU HAD BETTER THROTTLE
+  }
+
+}); // scroll handler

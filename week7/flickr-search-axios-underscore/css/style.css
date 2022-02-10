@@ -1,0 +1,18 @@
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  display: inline-block;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+#results {
+  margin-top: 2rem;
+}
+
+#results img:hover {
+  outline: 1px solid hotpink;
+}

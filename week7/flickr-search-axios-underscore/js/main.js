@@ -73,6 +73,13 @@ const renderSearchResults = (results) => {
     ulNode.appendChild( liNode ); // add to the <ul> container node
   }); // for each photo
 
+  resultsNode.innerHTML = `
+    <strong>
+      Found ${ results.total } results
+      (in ${ results.pages} pages):
+    </strong>`;
+    // clear the "Loading" message (and also clear any previous search results)
+
   resultsNode.appendChild( ulNode ); // add the <ul> to the actual DOM
 
 }; // renderSearchResults()
@@ -100,6 +107,7 @@ document.addEventListener('DOMContentLoaded', function(){
     ev.preventDefault(); // stop form from reloading page
     // const searchText = searchInputNode.value;
     // console.log('Form submitted!', searchText);
+    resultsNode.innerHTML = '<em>Loading results...</em>';
     fetchSearchResults( searchInputNode.value );
   }); // form submit handler
 

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue Intro</title>
+  <script src="js/vue.js"></script>
+  <script src="js/main.js" defer></script>
+  <style>
+    .allGood {
+      color: green;
+    }
+    .errors {
+      color: red
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Vue Intro</h1>
+
+  <!--
+  Vue can only "see" or change this section of the page
+  i.e. We tell Vue that it is in charge of some particular part of the DOM
+  -->
+  <div id="app">
+    <h3 @mouseover="changeMessage">
+      {{ message }}
+    </h3>
+
+
+    <p v-bind:title="hoverText">
+      Hover on this text to get a message
+    </p>
+
+    <button @click="changeMessage">Click me!</button>
+
+    <br>
+
+    <div v-if="showMessage">
+      <h3 :class="errorStatus">
+        This message will appear and disappear.
+      </h3>
+    </div>
+
+    <ul>
+      <li v-for="item in todoList">
+        {{ item.text }}
+      </li>
+    </ul>
+
+     <input type="text" v-model="message">
+
+     <br>
+
+    <img :src="billURL">
+
+  </div><!-- div#app - all Vue stuff must be above -->
+
+
+</body>
+</html>

@@ -2,6 +2,12 @@
 const FLICKR_API_KEY = '2f5ac274ecfac5a455f38745704ad084';
 const FLICKR_BASE_URL = 'https://api.flickr.com/services/rest';
 
+
+// We will store the DOM nodes in these variables
+// when the DOM is loaded
+let searchFormNode, searchInputNode, resultsNode, detailsNode;
+
+
 // Params:
 // method=flickr.photos.search
 // api_key  - REQUIRED
@@ -52,15 +58,37 @@ const fetchSearchResults = async (queryText) => {
 const renderSearchResults = (results) => {
   console.log('in renderSearchResults()', results);
   // results.photo.forEach( console.log );
-  results.photo.forEach( photo => console.log(photo.title) );
+  results.photo.forEach( photo => {
+    const imageURL = generateImageURL(photo);
+    console.log( imageURL );
+  });
 
 }; // renderSearchResults()
 
+
+const generateImageURL = (photo) => {
+
+  return `https://live.staticflickr.com/${ photo.server }/${ photo.id }_${photo.secret}_q.jpg`
+
+}; // generateImageURL()
 
 
 
 document.addEventListener('DOMContentLoaded', function(){
 
-  fetchSearchResults('coral ocean');
+  // fetchSearchResults('coral ocean');
+  searchFormNode = document.querySelector('#searchForm');
+  searchInputNode = document.querySelector('#searchText');
+  resultsNode = document.querySelector('#results');
+  detailsNode = document.querySelector('#details');
+  // $('#details') MISS U SO BAD GURL
+
+  searchInputNode.focus();
+
+  searchFormNode.addEventListener('submit', ev => {
+    ev.preventDefault(); // stop form from reloading page
+    console.log('Form submitted!');
+  });
+
 
 }); // document ready handler

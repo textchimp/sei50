@@ -17,15 +17,35 @@ class Calculator extends React.Component {
       secondNum: 0
     };
 
+    // Make sure our event handler method remembers the correct value of 'this'
+    // so we can run 'this.setState()' in it
+    this.updateFirstNum = this.updateFirstNum.bind( this );
+    this.updateSecondNum = this.updateSecondNum.bind( this );
+
   } // constructor()
 
 
   updateFirstNum( ev ){
     console.log('in updateFirstNum():', ev.target.value);
-  }
+    // HERE IS WHAT YOU ARE NOT ALLOWED TO DO:
+    // this.state.firstNum = ev.target.value;
+    // NO! FORBIDDEN! NO DIRECT STATE CHANGE!
+
+    this.setState({ firstNum: parseInt(ev.target.value) })
+
+
+  } // updateFirstNum()
+
+  updateSecondNum( ev ){
+    this.setState({ secondNum: parseInt(ev.target.value) })
+  } // updateSecondNum()
 
 
   render(){
+
+    // const firstNum = this.state.firstNum;
+    // const secondNum = this.state.secondNum;
+    const { firstNum, secondNum } = this.state;
 
     return (
       <div className="App">
@@ -35,12 +55,14 @@ class Calculator extends React.Component {
 
         <input type="text" placeholder="First number" onChange={ this.updateFirstNum } />
 
-        <input type="text" placeholder="Second number" />
+        <input type="text" placeholder="Second number" onChange={ this.updateSecondNum }/>
 
         <br/>
 
-        <p>firstNum: { this.state.firstNum }</p>
-        <p>secondNum: { this.state.secondNum }</p>
+        <p>{firstNum} + {secondNum} = { firstNum + secondNum }</p>
+        <p>{firstNum} - {secondNum} = { firstNum - secondNum }</p>
+        <p>{firstNum} / {secondNum} = { firstNum / secondNum }</p>
+        <p>{firstNum} * {secondNum} = { firstNum * secondNum }</p>
 
       </div>
     );

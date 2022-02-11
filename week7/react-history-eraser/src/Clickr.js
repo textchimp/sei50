@@ -20,7 +20,7 @@ class Clickr extends React.Component {
     // Run the method in the parent called reportClickCount,
     // which was passed to this child as a prop called
     // 'phoneHome'
-    this.props.phoneHome( newCounterValue );
+    this.props.phoneHome( this.state );
 
   };
 

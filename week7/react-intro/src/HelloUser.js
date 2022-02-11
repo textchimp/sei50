@@ -1,6 +1,11 @@
 
 import React from 'react';
 
+
+function BearImage( props ){
+  return <img src={`http://placebear.com/${ props.width }/${ props.height }`} />;
+}
+
 // Ruby: class User < ApplicationRecord
 class HelloUser extends React.Component {
 
@@ -12,7 +17,7 @@ class HelloUser extends React.Component {
       <div>
         Hello { this.props.name }!
         <br/>
-        <img src={`http://placekitten.com/${this.props.imgWidth}/${this.props.imgHeight}`} />
+        <BearImage width={ this.props.imgWidth } height={ this.props.imgHeight } />
       </div>
     );
 

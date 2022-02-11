@@ -34,7 +34,7 @@ const loadTrivia = function(){
     window.response = data;
 
 
-    console.log('data:', data.text);
+    console.log('data:', data.results);
 
     $('#output').html(`<p>${data.text}</p>`); // add to the page!
 
@@ -43,10 +43,16 @@ const loadTrivia = function(){
 
   const userQuery = $('#userQuery').val(); // get form input contents
 
-  xhr.open('GET', `http://www.numbersapi.com/${ userQuery }?json`);
+
+  // xhr.open('GET', `http://www.numbersapi.com/${ userQuery }?json`);
+
+  xhr.open('GET', `https://api.themoviedb.org/3/search/movie?api_key=24d863d54c86392e6e1df55b9a328755&query=alien`);
+
+
+
   xhr.send(); // This line DOES NOT BLOCK, unlike Ruby
 
-  // console.log('This line runs BEFORE we get a response... too soon!'); // asynchronous
+  console.log('This line runs BEFORE we get a response... too soon!'); // asynchronous
 
 
 }; // loadTrivia()

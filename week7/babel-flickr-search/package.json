@@ -1,0 +1,19 @@
+{
+  "name": "babel-flickr-search",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "transpile": "babel src -d js",
+    "watch": "babel --watch src -d js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-env": "^2.4.1",
+    "babel-polyfill": "^6.26.0"
+  }
+}

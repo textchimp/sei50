@@ -24,6 +24,7 @@ class App extends React.Component {
         <h1>Hello World from our class component!</h1>
 
         <HelloUser name="Cassie" imgWidth="300" imgHeight="200" />
+        <HelloUser name="Steven" imgWidth="200" imgHeight="400" />
 
       </div>
     );

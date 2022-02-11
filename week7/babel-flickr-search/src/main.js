@@ -21,7 +21,7 @@ let searchFormNode, searchInputNode, resultsNode, detailsNode;
 
 const fetchSearchResults = async (queryText) => {
 
-  console.log('in fetchSearchResults()', queryText);
+  console.log('in fetchSearchResults ()', queryText);
 
   try {
 

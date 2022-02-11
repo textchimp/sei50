@@ -1,0 +1,21 @@
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: inline-block;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+#results, #details {
+  text-align: center;
+  margin: auto;
+  margin-top: 2rem;
+}
+
+#results img:hover {
+  outline: 1px solid hotpink;
+}

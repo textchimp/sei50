@@ -5,6 +5,7 @@ import '../App.css';
 import axios from 'axios';
 
 import SearchForm from './SearchForm';
+import ThumbnailGallery from './ThumbnailGallery';
 
 // TODO: import from some single file of global constants
 const FLICKR_API_KEY = '2f5ac274ecfac5a455f38745704ad084';
@@ -79,13 +80,10 @@ class FlickrSearch extends React.Component {
 
         <SearchForm onSearch={ this.performSearch } />
 
-        {
-          this.state.loading
-          ?
-          <p>Loading results...</p>
-          :
-          this.state.resultPhotos.map( photo => <p key={ photo.id }>{ photo.title }</p> )
-        }
+        <ThumbnailGallery
+          loading={ this.state.loading }
+          photos={ this.state.resultPhotos }
+        />
 
 
       </div>

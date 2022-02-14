@@ -1,6 +1,8 @@
 
 // import React from 'react';
 
+import ProcedureSearchForm from './ProcedureSearchForm';
+
 const Procedures = (props) => {
 
   return (
@@ -12,6 +14,9 @@ const Procedures = (props) => {
       <p>
         Why not start with a <strong>Root Canal</strong>?
       </p>
+
+      <ProcedureSearchForm />
+
     </div>
   );
 

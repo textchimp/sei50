@@ -4,6 +4,7 @@ import './App.css';
 import Home from './Home'
 import TeethSales from './TeethSales'
 import Procedures from './Procedures'
+import ProcedureSearchResults from './ProcedureSearchResults'
 
 
 import { Route, HashRouter as Router, Link } from 'react-router-dom';
@@ -41,6 +42,7 @@ class App extends React.Component {
             <Route exact path="/" component={ Home } />
             <Route exact path="/sales" component={ TeethSales } />
             <Route exact path="/procedures" component={ Procedures } />
+            <Route exact path="/procedures/search/:query" component={ ProcedureSearchResults } />
 
 
         </Router>

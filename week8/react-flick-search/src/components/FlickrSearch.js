@@ -32,6 +32,12 @@ class FlickrSearch extends React.Component {
     // FlickrSearchResults component - similar to the
     // Creepy Dentist <ProcedureSearchResults> component
 
+    // componentDidUpdate() -- look into this and the args it gives you
+    // to work out how to do a new search from a search results route
+    // (assuming the search form is visible on every route)
+    // BEWARE OF INFINITE LOOPS - turn off the axios.get() and
+    // do a console.log instead while testing this!!!
+
     const flickrParams = {
       method: 'flickr.photos.search',
       api_key: FLICKR_API_KEY,

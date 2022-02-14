@@ -21,6 +21,20 @@ class App extends React.Component {
 
   render(){
 
+    let pageContent;
+
+    // This is our naive home-made router
+    if( this.state.currentPage === 'sales' ){
+      pageContent = <TeethSales />;
+      
+    } else if( this.state.currentPage === 'procedures' ){
+      pageContent = <Procedures />;
+    } else {
+      pageContent = <Home />;  // defaults to Home page
+    }
+
+
+
     return (
       <div className="App">
         <header>
@@ -41,6 +55,46 @@ class App extends React.Component {
           </nav>
           <hr/>
         </header>
+
+
+        { pageContent }
+
+
+        {
+          // We want to show only ONE of these
+          // at a time, to give the effect of
+          // navigating between unique 'pages'
+          // in this SPA;
+          // i.e. we want to do what React calls
+          // "conditional rendering"
+        }
+
+
+
+        {
+          // We are back in normal JS now
+          // ...so we can use normal comments
+          //
+
+          /* start of multiline comment
+
+          When we write:
+
+            < Home />
+
+          ...what React does behind the scenes is
+
+             // Ruby: Home.new()
+             // i.e.  make an object from a class
+
+             const homeInstance1 = new Home( props );
+             homeInstance1.render();
+
+
+          end of multine comment:  */
+        }
+
+
 
       </div>
     );

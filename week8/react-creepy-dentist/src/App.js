@@ -5,6 +5,9 @@ import Home from './Home'
 import TeethSales from './TeethSales'
 import Procedures from './Procedures'
 
+
+import { Route, HashRouter as Router } from 'react-router-dom';
+
 class App extends React.Component {
 
   // initialising state WITHOUT contstructor()
@@ -41,6 +44,20 @@ class App extends React.Component {
           </nav>
           <hr/>
         </header>
+
+        <Router>
+
+          {
+            // This is like the Rails routes.rb file!
+
+            //  get '/sales'  => 'sales#teeth'
+          }
+          <Route exact path="/" component={ Home } />
+          <Route exact path="/sales" component={ TeethSales } />
+          <Route exact path="/procedures" component={ Procedures } />
+
+        </Router>
+
 
       </div>
     );

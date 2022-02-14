@@ -2,9 +2,14 @@ import React from 'react';
 
 class ProcedureSearchResults extends React.Component {
 
-  // const {query} = this.props.match.params;
 
   render(){
+
+    // const query = this.props.match.params.query;
+    // const id = this.props.match.params.id;
+    // const {params} = this.props.match;
+    // const {query} = this.props.match.params;
+
 
     return (
       <div>

@@ -18,7 +18,8 @@ class ProcedureSearchForm extends React.Component {
     ev.preventDefault();
     console.log('handleSubmit()');
 
-
+    // How do i navigate to a new Router route from JS?
+    this.props.history.push(`/procedures/search/${ this.state.queryText }`);
 
   }; // handleSubmit()
 

@@ -1,3 +1,15 @@
+
+ul.secretsList {
+  list-style-type: none;
+}
+
+ul.secretsList li {
+  padding: 10px;
+  margin: 5px;
+  border: 1px dashed hotpink;
+}
+
+
 .App {
   text-align: center;
 }

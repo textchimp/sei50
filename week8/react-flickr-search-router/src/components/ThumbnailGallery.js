@@ -40,6 +40,33 @@ class ThumbnailGallery extends React.Component {
   } // componentDidMount()
 
 
+
+  // To do something when props or state changes, we use a
+  // lifecycle method called:
+  componentDidUpdate( prevProps, prevState ){
+    console.log('componentDidUpdate(): >>>>>>>>>>>>>>');
+    console.log('old props: ', prevProps.match.params.searchText);
+    console.log('cur props: ', this.props.match.params.searchText);
+    console.log('old state: ', prevState.resultPhotos);
+    console.log('cur state: ', this.state.resultPhotos);
+    console.log('====================================');
+
+    // do this.performSearch( this.props.match.params.searchText) here... which internally calls:
+    if( prevProps.match.params.searchText !== this.props.match.params.searchText ){
+      // if the router param prop containing the user search is
+      // different to the old one, it means a new search has
+      // been submitted, so it's time to re-submit the AJAX request
+      this.performSearch( this.props.match.params.searchText );
+    }
+
+    // if the old vs new props are NOT different, then
+    // componentDidUpdate() must be running due to a change of state,
+    // i.e. the setState() done by performSearch
+
+  } // componentDidUpdate
+
+
+
   performSearch = async (query) => {
     console.log('FlickrSearch::performSearch()', query);
 

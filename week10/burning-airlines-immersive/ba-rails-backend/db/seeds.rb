@@ -45,3 +45,15 @@ puts "Airplane #1 has #{Airplane.first.flights.length} flights (should be 2)"
 raise Exception.new('Airplane flights association is broken') if Airplane.first.flights.length != 2
 # ^ Automatically check that the number of flights in the association matches what you expect
 # ...kind of like an 'expect' assertion in a test suite, but lazier
+
+puts "Flight #1 has #{Flight.first.reservations.length} reservations (should be 3)"
+puts "User #3 has #{User.third.reservations.length} reservations (should be 2)"
+
+puts "Flight #1 has airplane name #{Flight.first.airplane.name} (should be '747')"
+
+puts "Reservation #1 has user name #{Reservation.first.user.name} (should be 'Test User 1')"
+
+puts "Reservation #2 has flight number #{Reservation.second.flight.flight_number} (should be 'BA256')"
+
+puts
+puts "Done."

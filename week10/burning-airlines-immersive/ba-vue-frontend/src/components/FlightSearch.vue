@@ -47,7 +47,17 @@ export default {
       console.log('Submitted!');
 
       // this.props.history.push(`/search/${this.origin}/${this.destination}`);
-      // this.$route.push();
+      this.$router.push({
+        name: 'SearchResults', // from router index.js
+        params: {
+          // fill out the blanks in the URL by
+          // using the key names from the router
+          // index.js:
+          //   /search/:origin/:destination
+          origin: this.origin,
+          destination: this.destination
+        }
+      });
 
     } // submitSearch()
   }, // methods

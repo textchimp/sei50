@@ -12,7 +12,7 @@
         <p>{{ flight.flight_number }}</p>
       </div><!-- v-for loop closing div tag -->
 
-    </div>
+    </div><!-- v-else (loading == false) div closing tag -->
 
 
   </div>

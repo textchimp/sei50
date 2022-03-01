@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div>
     <h1>{{ msg }}</h1>
 
     <button @click="reverseMessage">Click me to change the heading</button>
@@ -103,7 +103,7 @@ export default {
     // reverseMessage: function(){}
     reverseMessage(){
       // console.log('Clicked!');
-      this.msg = this.msg.split('').reverse().join('');     // this will magically trigger a rerender! 
+      this.msg = this.msg.split('').reverse().join('');     // this will magically trigger a rerender!
       // this is the equivalent of 'this.setState({ msg: 'NEW HEADING' })'
     }, // reverseMessage()
   }

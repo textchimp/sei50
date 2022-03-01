@@ -3,8 +3,22 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import FlightSearch from '@/components/FlightSearch'
 import FlightSearchResults from '@/components/FlightSearchResults'
+import FlightDetails from '@/components/FlightDetails'
 
-Vue.use(Router)
+// if( process.env )
+// console.log(process.env);
+
+// Do NOT use the real router if we are in
+// testing mode! (because we need to be
+// able to 'mock' or fake the $router
+// for testing). (Karma sets this environment
+// variable to 'testing'; when using the
+// dev server and the browser it will
+// be 'development')
+// console.log(process.env);
+if( process.env.NODE_ENV !== 'testing' ){
+  Vue.use(Router)
+}
 
 export default new Router({
   routes: [
@@ -28,6 +42,12 @@ export default new Router({
       // as just 'this.origin', or in the template,
       // even simpler: 'origin'
       // ... instead of this.$route.params.origin
+    },
+    {
+      path: '/flights/:id',
+      name: 'FlightDetails',
+      component: FlightDetails,
+      props: true
     }
 
 

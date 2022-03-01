@@ -8,8 +8,14 @@
 
     <div v-else>
 
-      <div v-for="flight in flights">
-        <p>{{ flight.flight_number }}</p>
+      <div class="results" v-for="flight in flights">
+        <div @click="gotoFlight(flight.id)">
+          <!-- fix the hideous format of these dates!!! npm luxon -->
+          {{ flight.departure_date }}:
+          {{ flight.flight_number }}
+          -
+          {{ flight.airplane.name  }}
+        </div>
       </div><!-- v-for loop closing div tag -->
 
     </div><!-- v-else (loading == false) div closing tag -->
@@ -44,7 +50,7 @@ export default {
     try {
       const url = `${API_BASE_URL}flights/search/${this.origin}/${this.destination}`;
       const res = await axios.get(url);
-      this.flights = res.data;
+      this.flights = res.data;  // save AJAX response into Vue state
       this.loading = false;
       console.log('response', res.data);
     } catch( err ){
@@ -55,10 +61,24 @@ export default {
   }, // mounted()
 
   methods: {
+    gotoFlight(id){
+      console.log('gotoFlight()', id);
+      this.$router.push({
+        name: 'FlightDetails',
+        params: { id: id }
+      });
+    }, // gotoFlight()
   }, // methods
 
 }; // export default object
 </script>
 
 <style scoped>
+  .results div {
+    cursor: pointer;
+  }
+  .results div:hover{
+    text-decoration: underline;
+    font-weight: bold;
+  }
 </style>

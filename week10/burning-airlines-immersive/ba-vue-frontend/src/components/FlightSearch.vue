@@ -46,7 +46,7 @@ export default {
     submitSearch(){
       console.log('Submitted!');
 
-      console.log('$router:', this.$router);
+      // console.log('$router:', this.$router);
       // this.props.history.push(`/search/${this.origin}/${this.destination}`);
       this.$router.push({
         name: 'SearchResults', // from router index.js

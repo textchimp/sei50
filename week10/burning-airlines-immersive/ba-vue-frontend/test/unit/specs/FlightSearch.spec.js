@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 
+// import sinon from 'sinon';
+
 /*
 
 karma - "test runner", sets up test environment, loads config,
@@ -24,12 +26,21 @@ vue-test-utils - adapter for mounting components within a headless/
                 component by triggering clicks and other user
                 events, and wait for the results
 
-
+sinon - "mock library", i.e. it lets us easily create mocks/stubs
+        so we can provide fake versions of functions like
+        $router.push() to our component, and neatly make
+        assertions about whether and how those functions were
+        called - a.k.a "mocking"
 
 */
 
-
 import FlightSearch from '@/components/FlightSearch';
+
+
+
+const $router = {
+  push: sinon.spy() // a spy is a mock that keeps track of whether/how it was called
+};
 
 describe('<FlightSearch>', () => {
 
@@ -52,7 +63,6 @@ describe('<FlightSearch>', () => {
     // so we can test whether the component is actually doing
     // its job!
 
-
     const wrapper = mount(
       FlightSearch,
       // options object for mount:
@@ -60,13 +70,17 @@ describe('<FlightSearch>', () => {
         mocks: {
           // define the faked properties/methods that should
           // exist on the component instance, i.e. "this"
-          $router: {
-            push: function(args){
+          // $router: {
+          //   push: function(args){
+          //     console.log('FAKE $router.push() called:', args);
+          //     expect(args.name).to.equal('SearchResullllllllt');
+          //   } // push()
+          // } // $router
 
-            }
-          }
-        }
-      }
+          $router: $router // use the sinon spy defined above
+
+        } // mocks
+      } // options 2nd arg to mount()
     );
 
     // console.log('text:', wrapper.html());
@@ -82,10 +96,30 @@ describe('<FlightSearch>', () => {
     // simulate user click on the search button
     await button.trigger('click');
 
-    //
+    // The final thing we need to check is that the component
+    // did run the this.$router.push() function (which we
+    // have now mocked), and that it passed it the correct
+    // routing arguments, including the origin and destination
+    // params
 
+    // expect( $router.push ).to.have.been.called;
 
-  });
+    // TODO: instead of relying on the default origin & destination
+    // values of 'SYD' & 'MEL' in the component state, keep the
+    // defaults empty and use wrapper event methods to select
+    // the dropdown elements from this test code - and then
+    // check that the selected values match the params pushed
+    // to our router spy
+
+    expect( $router.push ).to.have.been.calledWith(sinon.match({
+      name: 'SearchResults',
+      params: {
+        origin: 'SYD',
+        destination: 'MEL'
+      }
+    }));
+
+  }); // it should render
 
 
 }); // describe <FlightSearch>

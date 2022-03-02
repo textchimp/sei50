@@ -11,7 +11,7 @@
       <div class="results" v-for="flight in flights">
         <div @click="gotoFlight(flight.id)">
           <!-- fix the hideous format of these dates!!! npm luxon -->
-          {{ flight.departure_date }}:
+          {{ formatDate(flight.departure_date)  }}:
           {{ flight.flight_number }}
           -
           {{ flight.airplane.name  }}
@@ -27,6 +27,9 @@
 <script>
 
 import axios from 'axios';
+import { DateTime } from 'luxon';
+
+window.testDateTime = DateTime;  // just for debugging
 
 const API_BASE_URL = 'http://localhost:3000/';
 
@@ -68,6 +71,11 @@ export default {
         params: { id: id }
       });
     }, // gotoFlight()
+
+    formatDate(isoDate){
+      return DateTime.fromISO(isoDate).toLocaleString(DateTime.DATETIME_FULL);
+    },
+
   }, // methods
 
 }; // export default object

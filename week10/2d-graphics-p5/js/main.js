@@ -6,8 +6,17 @@ console.log('main.js loaded');
 
 const circles = [];  // for storing all the drawn circles, so we can redraw and move them
 
+const controls = {
+  velocityScale: 1.0,
+};
+
 // Runs ONCE when the sketch is first loaded
 function setup(){
+
+  // Create a control panel
+  const gui = new dat.GUI();
+  gui.add( controls, 'velocityScale', -2.0, 2.0 );
+
   // Make the canvas the full size of the window
   createCanvas(windowWidth, windowHeight);
 

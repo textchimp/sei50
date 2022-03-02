@@ -82,19 +82,19 @@ function draw(){
   );
 
 
-  fill(
-    // random(255), // Math.random() * 255,
-    // random(255),
-    // random(255),
-
-    hue,
-    // frameCount % 255, // Hue
-    // 100 + (frameCount % 100),
-    255,  // Saturation
-    255,  // Brightness
-
-    220   // "alpha channel" aka opacity
-  );
+  // fill(
+  //   // random(255), // Math.random() * 255,
+  //   // random(255),
+  //   // random(255),
+  //
+  //   hue,
+  //   // frameCount % 255, // Hue
+  //   // 100 + (frameCount % 100),
+  //   255,  // Saturation
+  //   255,  // Brightness
+  //
+  //   220   // "alpha channel" aka opacity
+  // );
 
   // Random size + position "screensaver" example
   // const circleSize = random(1000);
@@ -122,16 +122,27 @@ function draw(){
     //   circleSize
     // );
 
+
+    const mouseXVelocity = mouseX - pwinMouseX; // thanks p5!
+    const mouseYVelocity = mouseY - pwinMouseY; // thanks p5!
+
     const newCircle = {
       xPos: mouseX,
       yPos: mouseY,
       size: circleSize,
-      hue: hue
+      hue: hue,
+      // xVel: random(-5, 5),  // create a random speed (velocity) for each
+      // yVel: random(-5, 5)   // new circle when it's created
+      xVel: mouseXVelocity,
+      yVel: mouseYVelocity
     };
 
     circles.push( newCircle );  // record the fact that a new circle was created
 
   } // if shift is held
+
+  // clear the screen (unless you want cool trails)
+  background(0);
 
   updateCircles();
 
@@ -144,15 +155,21 @@ function updateCircles(){
   // for( let i = 0; i < circles.length; i++ ){
   //   circles[i]
   // }
-
-  // circles.forEach( c => {
-  //   // draw c
+  // circles.forEach( circle => {
+  //   // draw circ
   // });
 
   for( const circle of circles ){
-    console.log('circle:', circle.xPos, circle.yPos);
-  }
 
+    // change the position of the current circle
+    circle.xPos += circle.xVel;  // add the circle's speed (i.e. 10 pixels) to its position
+    circle.yPos += circle.yVel;
+
+    // draw the circle
+    fill( circle.hue, 255, 255, 200 );
+    ellipse( circle.xPos, circle.yPos, circle.size, circle.size );
+
+  } // for each circle
 
 } // updateCircles()
 

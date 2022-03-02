@@ -35,7 +35,11 @@
 
           {{ row }}
 
-          <div class="planeSeat" v-for="col in flight.airplane.cols">
+          <div
+           class="planeSeat"
+           :class="getSeatStatus(row, col)"
+           v-for="col in flight.airplane.cols"
+          >
             {{ col | seatColToLetter }}
           </div>
 
@@ -79,6 +83,18 @@ export default {
   },
 
   methods: {
+    getSeatStatus( row, col ){
+      // return Math.random() > 0.5 ? 'occupied' : 'booked';
+
+      for( const res of this.flight.reservations ){
+        if( res.row === row && res.col === col ){
+          return 'occupied';
+        }
+      } // for each reservation
+
+      return ''; // not occupied
+
+    },
   },
 
   async mounted(){
@@ -114,6 +130,14 @@ export default {
     line-height: 40px;
     border-radius: 20% 20% 0 0;
     margin: 4px;
+  }
+
+  .occupied {
+    background-color: grey;
+  }
+
+  .booked {
+    background-color: orange;
   }
 
 </style>

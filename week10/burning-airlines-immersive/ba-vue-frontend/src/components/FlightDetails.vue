@@ -38,6 +38,7 @@
           <div
            class="planeSeat"
            :class="getSeatStatus(row, col)"
+           @click="selectSeat(row, col)"
            v-for="col in flight.airplane.cols"
           >
             {{ col | seatColToLetter }}
@@ -58,6 +59,9 @@
 </template>
 
 <script>
+
+// Fake a logged-in user ID
+const FAKE_USER_ID = 16; // Use your own user ID from reservation state!
 
 import axios from 'axios';
 
@@ -83,13 +87,36 @@ export default {
   },
 
   methods: {
+
+    selectSeat(row, col){
+      console.log('selected seat:', row, col);
+      // Either: Do a real BA shortcut and fire off an AJAX
+      // POST request immediately to the Rails backend to
+      // book this seat, 
+      // OR, PREFERRABLY,
+      // save the selected row & col into state, show a confirmation
+      // box above the seating diagram with a 'Confirm' button to
+      // give the user a chance to change their selection before
+      // submitting the booking
+      // And, IDEALLY - do this confirmation UI in a child component!
+      // How does the child component talk back to the parent?
+
+    },
+
     getSeatStatus( row, col ){
       // return Math.random() > 0.5 ? 'occupied' : 'booked';
 
       for( const res of this.flight.reservations ){
         if( res.row === row && res.col === col ){
-          return 'occupied';
-        }
+
+          if( res.user_id === FAKE_USER_ID ){
+            return 'booked';
+          } else {
+            return 'occupied';
+          }
+
+
+        } // seat match
       } // for each reservation
 
       return ''; // not occupied
@@ -130,14 +157,22 @@ export default {
     line-height: 40px;
     border-radius: 20% 20% 0 0;
     margin: 4px;
+    cursor: pointer;
+  }
+
+  .planeSeat:hover {
+    background: #EEEEEE;
+    border: 1px solid black;
   }
 
   .occupied {
     background-color: grey;
+    pointer-events: none;
   }
 
   .booked {
     background-color: orange;
+    pointer-events: none;
   }
 
 </style>

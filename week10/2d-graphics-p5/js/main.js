@@ -8,6 +8,7 @@ const circles = [];  // for storing all the drawn circles, so we can redraw and 
 
 const controls = {
   velocityScale: 1.0,
+  drawTrails: false
 };
 
 // Runs ONCE when the sketch is first loaded
@@ -16,6 +17,7 @@ function setup(){
   // Create a control panel
   const gui = new dat.GUI();
   gui.add( controls, 'velocityScale', -2.0, 2.0 );
+  gui.add( controls, 'drawTrails');
 
   // Make the canvas the full size of the window
   createCanvas(windowWidth, windowHeight);
@@ -120,6 +122,10 @@ function draw(){
   // 1. record the details about each circle as its drawn, into an array
   // 2. every draw() loop, also loop through the array of circles and REDRAW them
 
+
+  const mouseXVelocity = mouseX - pwinMouseX; // thanks p5!
+  const mouseYVelocity = mouseY - pwinMouseY; // thanks p5!
+
   if( keyIsDown(SHIFT) ){
 
     const circleSize = 60;
@@ -130,10 +136,6 @@ function draw(){
     //   circleSize,
     //   circleSize
     // );
-
-
-    const mouseXVelocity = mouseX - pwinMouseX; // thanks p5!
-    const mouseYVelocity = mouseY - pwinMouseY; // thanks p5!
 
     const newCircle = {
       xPos: mouseX,
@@ -146,17 +148,26 @@ function draw(){
       yVel: mouseYVelocity
     };
 
-    circles.push( newCircle );  // record the fact that a new circle was created
+    // Avoid stationary circles!
+    if( mouseXVelocity !== 0 || mouseYVelocity !== 0 ){
+      circles.push( newCircle );  // record the fact that a new circle was created
+    }
 
   } // if shift is held
 
   // clear the screen (unless you want cool trails)
-  background(0);
+  if( controls.drawTrails === false ){
+    background(0);
+  }
 
   updateCircles();
 
 } // draw()
 
+
+
+
+// Time complexity: O(N^2) - "linear time"
 
 function updateCircles(){
   // loop through the array of circles and REDRAW them
@@ -171,8 +182,18 @@ function updateCircles(){
   for( const circle of circles ){
 
     // change the position of the current circle
-    circle.xPos += circle.xVel;  // add the circle's speed (i.e. 10 pixels) to its position
-    circle.yPos += circle.yVel;
+    circle.xPos += circle.xVel * controls.velocityScale; // add the circle's speed (i.e. 10 pixels) to position
+    circle.yPos += circle.yVel * controls.velocityScale;
+
+    // bounce off edges!
+    if( circle.xPos >= windowWidth || circle.xPos <= 0 ){
+      circle.xVel *= -1;  // flip the sign of the velocity.... i.e. bounce!
+    }
+    if( circle.yPos >= windowHeight || circle.yPos <= 0 ){
+      circle.yVel *= -1;
+    }
+
+    drawLinesFrom( circle );
 
     // draw the circle
     fill( circle.hue, 255, 255, 200 );
@@ -184,6 +205,22 @@ function updateCircles(){
 
 
 
+function drawLinesFrom( c ){
+
+  for( const otherCircle in circles ){
+
+    if( c === otherCircle ){
+      continue; // don't draw a line from the same circle to itself (which would look like a dot)
+    }
+
+    strokeWeight(2);
+    stroke( c.hue, 255, 255, 200 );
+    line( c.xPos, c.yPos,  otherCircle.xPos, otherCircle.yPos  );
+
+  } // for each other circle
+
+} // drawLinesFrom()
+
 
 
 
@@ -193,3 +230,13 @@ function updateCircles(){
 // function windowResized() {
 //   resizeCanvas(windowWidth, windowHeight);
 // }
+
+// This runs whenever a key is pressed
+function keyPressed( ev ){
+  if( ev.key === ' ' ){
+    ev.preventDefault();
+    background(0);
+    circles.length = 0;   // effectively empty the array, no more circles
+  }
+
+} // keyPressed()

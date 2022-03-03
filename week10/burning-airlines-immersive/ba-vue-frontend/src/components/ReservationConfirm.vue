@@ -19,7 +19,7 @@ export default {
       // In Vue, we don't have to rely on a function being passed down
       // from parent to child as a prop -
       // instead, we just 'emit' an event
-      this.$emit( 'seatConfirmed', 1, 2, 'a' );  // this is a made up name! We need to listen for exactly this named event in the parent
+      this.$emit( 'seat-confirmed', 1, 2, 'a' );  // this is a made up name! We need to listen for exactly this named event in the parent
       // Note that you can send arguments to the parent handler! (These are just random example arguments)
 
     },

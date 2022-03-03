@@ -28,22 +28,27 @@
         {{ flight.airplane.name }}
       </div>
 
-      <ReservationConfirm
+      <reservation-confirm
        v-if="selectedSeat.row && selectedSeat.col"
        :row="selectedSeat.row"
        :col="selectedSeat.col"
-       @seatConfirmed="handleSeatConfirmed"
+       @seat-confirmed="handleSeatConfirmed"
       />
 
       <div class="seating">
 
-        <div class="planeRow" v-for="row in flight.airplane.rows">
+        <div
+         v-for="row in flight.airplane.rows"
+         class="planeRow"
+         :key="row"
+        >
 
           {{ row }}
 
           <div
            v-for="col in flight.airplane.cols"
            class="planeSeat"
+           :key="col"
            :class="getSeatStatus(row, col)"
            @click="selectSeat(row, col)"
           >
@@ -100,12 +105,12 @@ export default {
 
   methods: {
 
-    handleSeatConfirmed(first, second, another){
+    handleSeatConfirmed(id, ...allArgs){
       // This is the handler for the 'seatConfirmed' event from the
       // ReservationConfirm child component; it gets whatever extra
       // arguments are passed from the child's 'this.$emit()' call, i.e.:
       //    this.$emit( 'seatConfirmed', 1, 2, 'a' );
-      console.log('handleSeatConfirmed()', first, second, another);
+      console.log('handleSeatConfirmed()', id, allArgs);
 
       // do an axios.post() to Rails backend,
       // write the controller action to add a reservation -

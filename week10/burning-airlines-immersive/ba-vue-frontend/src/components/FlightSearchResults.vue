@@ -48,17 +48,18 @@ export default {
   // This is like React's componentDidMount() - runs once when the component
   // is added to the DOM
   async mounted(){
-    console.log('Component mounted', this.origin, this.destination);
+    // console.log('Component mounted', this.origin, this.destination);
 
     try {
       const url = `${API_BASE_URL}flights/search/${this.origin}/${this.destination}`;
       const res = await axios.get(url);
       this.flights = res.data;  // save AJAX response into Vue state
       this.loading = false;
-      console.log('response', res.data);
+      // console.log('response', res.data);
     } catch( err ){
-      console.log('Error loading flight search results', err);
-      this.error = error;
+      console.log('axios.get', axios.get);
+      console.log('Error loading flight search results', err.message, err);
+      this.error = err;
     }
 
   }, // mounted()

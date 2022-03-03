@@ -37,12 +37,17 @@ const fakeFlights = [
 
 axios.get = sinon.stub().returns( Promise.resolve( {data: fakeFlights} ) );
 
+const $router = {
+  push: sinon.spy()
+};
+
 describe('<FlightSearchResults>', () => {
 
   let wrapper;
   beforeEach( () => {
 
     wrapper = mount(FlightSearchResults, {
+      mocks: { $router: $router  },
       propsData: { origin: 'SYD', destination: 'MEL'  } // fake props (from router)
     });
 
@@ -59,11 +64,12 @@ describe('<FlightSearchResults>', () => {
 
 
 
-  it('renders without errors', () => {
+  it('should render without errors', () => {
     expect( wrapper.text()).to.contain('Search Results from SYD to MEL');
+    expect( wrapper.text()).to.contain('Loading flight results');
   }); // it renders without smoke pouring out of it
 
-  it('renders a list of matching flights', async () => {
+  it('should render a list of matching flights', async () => {
     // console.log('page:', wrapper.text() );
 
     // The axios.get() inside the component's mounted() method
@@ -75,7 +81,11 @@ describe('<FlightSearchResults>', () => {
     // console.log('page after waiting:', wrapper.text());
 
     // Test that our stubbed version (which is also a spy) was called with
-    // the correct Rails API endpoint URL (including the test origin & destination)
+    // the correct Rails API endpoint URL (including the test origin
+    // & destination)
+    // TODO: don't rely on hardcoded URLs - extract them into a config file
+    // that is imported by the component, and also imported by this test
+    // spec file
     expect( axios.get ).to.have.been.calledWith( 'http://localhost:3000/flights/search/SYD/MEL' );
 
     // It should stop showing the loading message once the response data arrives!
@@ -95,6 +105,24 @@ describe('<FlightSearchResults>', () => {
     // TODO: do the same checks for the second test flight
 
   }); // it renders flights
+
+
+
+  it('should push the clicked result to the router', async () => {
+
+      await wrapper.vm.$nextTick(); // wait for results to render
+
+      const results = wrapper.findAll('div.results div');
+
+      await results.at(0).trigger('click'); // click the result to trigger a push
+
+      expect( $router.push ).to.have.been.calledWith( sinon.match({
+        name: 'FlightDetails',
+        params: { id: 1 }
+      }))
+
+  }); // it navigates to the details page
+
 
 
 }); // describe <FlightSearchResults>

@@ -28,6 +28,11 @@
         {{ flight.airplane.name }}
       </div>
 
+      <ReservationConfirm
+       v-if="selectedSeat.row && selectedSeat.col"
+       :row="selectedSeat.row"
+       :col="selectedSeat.col"
+      />
 
       <div class="seating">
 
@@ -60,6 +65,8 @@
 
 <script>
 
+import ReservationConfirm from './ReservationConfirm';
+
 // Fake a logged-in user ID
 const FAKE_USER_ID = 16; // Use your own user ID from reservation state!
 
@@ -70,16 +77,20 @@ const API_BASE_URL = 'http://localhost:3000/';
 export default {
   name: 'FlightDetails',
   props: ['id'],
+  components: { ReservationConfirm }, // ReservationConfirm: ReservationConfirm
   data(){
     return {
       flight: {}, // AJAX response data saved here
       loading: true,
       error: null,
+      selectedSeat: {
+        row: null,
+        col: null
+      }
     }
   },
 
   filters: {
-
     seatColToLetter( column ){
       return String.fromCharCode(64 + column);
     },
@@ -90,9 +101,14 @@ export default {
 
     selectSeat(row, col){
       console.log('selected seat:', row, col);
+
+      this.selectedSeat = { row, col }; // save the selection into state
+
+      // console.log('');
+
       // Either: Do a real BA shortcut and fire off an AJAX
       // POST request immediately to the Rails backend to
-      // book this seat, 
+      // book this seat,
       // OR, PREFERRABLY,
       // save the selected row & col into state, show a confirmation
       // box above the seating diagram with a 'Confirm' button to
@@ -105,6 +121,11 @@ export default {
 
     getSeatStatus( row, col ){
       // return Math.random() > 0.5 ? 'occupied' : 'booked';
+
+      if( this.selectedSeat.row === row && this.selectedSeat.col === col ){
+        return 'selected'; // becomes the class of this seat
+      }
+
 
       for( const res of this.flight.reservations ){
         if( res.row === row && res.col === col ){
@@ -173,6 +194,11 @@ export default {
   .booked {
     background-color: orange;
     pointer-events: none;
+  }
+
+  .selected {
+    background-color: green !important;
+    color: white;
   }
 
 </style>

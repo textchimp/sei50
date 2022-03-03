@@ -32,6 +32,7 @@
        v-if="selectedSeat.row && selectedSeat.col"
        :row="selectedSeat.row"
        :col="selectedSeat.col"
+       @seatConfirmed="handleSeatConfirmed"
       />
 
       <div class="seating">
@@ -41,10 +42,10 @@
           {{ row }}
 
           <div
+           v-for="col in flight.airplane.cols"
            class="planeSeat"
            :class="getSeatStatus(row, col)"
            @click="selectSeat(row, col)"
-           v-for="col in flight.airplane.cols"
           >
             {{ col | seatColToLetter }}
           </div>
@@ -88,23 +89,36 @@ export default {
         col: null
       }
     }
-  },
+  }, // data()
 
   filters: {
     seatColToLetter( column ){
       return String.fromCharCode(64 + column);
     },
 
-  },
+  }, // filters
 
   methods: {
+
+    handleSeatConfirmed(first, second, another){
+      // This is the handler for the 'seatConfirmed' event from the
+      // ReservationConfirm child component; it gets whatever extra
+      // arguments are passed from the child's 'this.$emit()' call, i.e.:
+      //    this.$emit( 'seatConfirmed', 1, 2, 'a' );
+      console.log('handleSeatConfirmed()', first, second, another);
+
+      // do an axios.post() to Rails backend,
+      // write the controller action to add a reservation -
+      // probably check that there isn't already a booking for
+      // that row:col - use a validation?
+
+    }, // handleSeatConfirmed()
+
 
     selectSeat(row, col){
       console.log('selected seat:', row, col);
 
       this.selectedSeat = { row, col }; // save the selection into state
-
-      // console.log('');
 
       // Either: Do a real BA shortcut and fire off an AJAX
       // POST request immediately to the Rails backend to

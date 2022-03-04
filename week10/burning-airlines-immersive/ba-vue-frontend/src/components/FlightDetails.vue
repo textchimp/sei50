@@ -170,26 +170,30 @@ export default {
 
     },
 
+    // for each seat to draw:
+    //    for each reservation to check:
+    //
+    // O(N^2)
     getSeatStatus( row, col ){
       // return Math.random() > 0.5 ? 'occupied' : 'booked';
 
-      if( this.selectedSeat.row === row && this.selectedSeat.col === col ){
-        return 'selected'; // becomes the class of this seat
-      }
-
-
       for( const res of this.flight.reservations ){
-        if( res.row === row && res.col === col ){
 
+        window.seatRenderCount++;
+
+        if( res.row === row && res.col === col ){
           if( res.user_id === FAKE_USER_ID ){
             return 'booked';
           } else {
             return 'occupied';
           }
-
-
         } // seat match
       } // for each reservation
+
+
+      if( this.selectedSeat.row === row && this.selectedSeat.col === col ){
+        return 'selected'; // becomes the class of this seat
+      }
 
       return ''; // not occupied
 
@@ -211,11 +215,13 @@ export default {
   }, // methods:
 
   mounted(){
+    window.seatRenderCount = 0; // just for debugging
+
     console.log('FlightDetails mounted, ID =', this.id);
     this.getFlight();
 
     // Poll the server every 2s to get any new reservations:
-    window.setInterval( this.getFlight, 2000 );
+    // window.setInterval( this.getFlight, 2000 );
 
   }, // mounted()
 

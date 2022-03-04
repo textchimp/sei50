@@ -105,7 +105,7 @@ export default {
 
   methods: {
 
-    handleSeatConfirmed(id, ...allArgs){
+    async handleSeatConfirmed(id, ...allArgs){
       // This is the handler for the 'seatConfirmed' event from the
       // ReservationConfirm child component; it gets whatever extra
       // arguments are passed from the child's 'this.$emit()' call, i.e.:
@@ -116,6 +116,19 @@ export default {
       // write the controller action to add a reservation -
       // probably check that there isn't already a booking for
       // that row:col - use a validation?
+      try {
+        const url = `${API_BASE_URL}reservations`;
+        const res = await axios.post(url, {
+          flight_id: this.id,
+          row: this.selectedSeat.row,
+          col: this.selectedSeat.col
+        });
+        console.log('reservation response:', res.data);
+      } catch( err ){
+        console.log('Error creating reservation:', err);
+        this.error = err;
+      }
+
 
     }, // handleSeatConfirmed()
 

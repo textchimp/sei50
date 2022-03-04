@@ -35,6 +35,10 @@
        @seat-confirmed="handleSeatConfirmed"
       />
 
+      <div class="confirmation" v-if="confirmationMessage.length > 0">
+        {{ confirmationMessage }}
+      </div>
+
       <div class="seating">
 
         <div
@@ -92,7 +96,8 @@ export default {
       selectedSeat: {
         row: null,
         col: null
-      }
+      },
+      confirmationMessage: ''
     }
   }, // data()
 
@@ -124,6 +129,18 @@ export default {
           col: this.selectedSeat.col
         });
         console.log('reservation response:', res.data);
+
+        // Stop the confirmation child component from displaying
+        this.selectedSeat = {};
+
+        // Make sure the seating diagram shows the booked seat as an
+        // orange seat belonging to the current user
+        // (immediately, not after a page reload)
+        this.flight.reservations.push( res.data );
+
+        // Show a message to the user
+        this.confirmationMessage = 'Your reservation was successfully booked!';
+
       } catch( err ){
         console.log('Error creating reservation:', err);
         this.error = err;
@@ -137,6 +154,8 @@ export default {
       console.log('selected seat:', row, col);
 
       this.selectedSeat = { row, col }; // save the selection into state
+
+      this.confirmationMessage = '';
 
       // Either: Do a real BA shortcut and fire off an AJAX
       // POST request immediately to the Rails backend to
@@ -174,22 +193,29 @@ export default {
 
       return ''; // not occupied
 
-    },
-  },
+    }, // getSeatStatus()
 
-  async mounted(){
+    async getFlight(){
+      try {
+        const url = `${API_BASE_URL}flights/${ this.id }`;
+        const res = await axios.get(url);
+        console.log('flight', res.data);
+        this.flight = res.data;
+        this.loading = false;
+      } catch( err ){
+        console.log('Error loading Flight details', err);
+        this.error = err;
+      }
+    }, // getFlight()
+
+  }, // methods:
+
+  mounted(){
     console.log('FlightDetails mounted, ID =', this.id);
+    this.getFlight();
 
-    try {
-      const url = `${API_BASE_URL}flights/${ this.id }`;
-      const res = await axios.get(url);
-      console.log('flight', res.data);
-      this.flight = res.data;
-      this.loading = false;
-    } catch( err ){
-      console.log('Error loading Flight details', err);
-      this.error = err;
-    }
+    // Poll the server every 2s to get any new reservations:
+    window.setInterval( this.getFlight, 2000 );
 
   }, // mounted()
 
@@ -231,6 +257,13 @@ export default {
   .selected {
     background-color: green !important;
     color: white;
+  }
+
+  .confirmation {
+    padding-top: 50px;
+    font-size: 18pt;
+    color: green;
+    font-weight: bold;
   }
 
 </style>

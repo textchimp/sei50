@@ -17,12 +17,12 @@ class SLL
   # we can advance via '.next' to all the following nodes
   attr_accessor :head
 
-  def initialize( val )
+  def initialize( val=nil )
     # Create an instance of the Node class, and forward
     # on the 'val' argument given to this SLL constructor
     # as the data of this new node; the returned Node
     # is stored as the @head of this SLL object
-    @head = Node.new val
+    @head = Node.new val  unless val.nil?
   end
 
 
@@ -127,34 +127,78 @@ class SLL
   # so that you always know the current length
   # WITHOUT needing to loop through the whole list
   #
-  # def length
+  def length
+
+    count = 0
+    node = @head
+
+    while node != nil
+      count += 1
+      node = node.next
+    end
+    # @length = count   # would be nice as shortcut
+    count
+  end # length
 
 
   # at_index( n )
   # array-like access of specific item at an index,
   # returns the entire node at that index
   #
-  # def []( n )     #  list[ n ]
+  def []( index )     #  list[ n
 
+    return nil unless index < self.length
+    # raise IndexError.new('out of range') unless index < self.length
+
+    node = @head
+    index.times { node = node.next }
+    node
+  end # [] method
+
+  alias_method :at_index, :[]
 
   # reverse - returns a reversed version of the list
   # do NOT change the original list, i.e.
   # make this method non-destructive
   #
-  # def reverse
+  def reverse
+
+    reversed = SLL.new  # leave off argument to avoid creating a head node
+
+    node = @head
+    while node != nil
+      reversed.prepend node.data
+      node = node.next
+    end
+
+    reversed # return the new reversed list
+  end # reverse()
 
 
   # reverse! - destructive version of reverse,
   # DOES change the list you call it on, i.e.
   # changes 'self'
   #
-  # def reverse!
+  def reverse!
+    # self = self.reverse # 'the self is immutable'
+    @head = self.reverse.head
+  end
 
 
   # shift - remove the first node from the list
   # and returns it
   #
-  # def shift
+  def shift
+
+    # if we don't do this first, it's too late after the next line
+    first_node = @head
+    @head = @head.next
+
+    first_node.next = nil # don't include the rest of the list
+
+    first_node
+  end
+
 
 
   # delete - remove the specified node from the list,
@@ -164,7 +208,30 @@ class SLL
   # it assumes you have used .find() (or maybe
   # .at_index(n) / [n] ) to get a current node
   #
-  # def delete( node )
+  def delete( node_to_delete )
+
+    node = @head
+    prev_node = nil
+
+    while node != node_to_delete && node != nil
+      prev_node = node  # keep track for when we find the node to delete
+      node = node.next
+    end # while
+
+    if node == node_to_delete
+      # special case where the node to delete is the first node
+      if node == @head
+        @head = node.next
+        return true
+      end
+
+      prev_node.next = node.next # standard case
+    end
+
+
+    false # this should only happen if the specified node to delete is not actually in this list
+
+  end # delete()
 
 
   # each - implement the each method as it exists in
@@ -226,6 +293,6 @@ list = SLL.new 'Morty'
 list.prepend 'Rick'
 list.append 'Summer'
 
-p list
+puts list
 
 binding.pry # start debugger

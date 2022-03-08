@@ -83,6 +83,8 @@ db.once('open', async () => {
     console.log('flights:', flights);
   } catch ( err ){
     console.log('Error finding flights:', err);
+
+    db.close(); // close the connection
     process.exit(1);
   }
 

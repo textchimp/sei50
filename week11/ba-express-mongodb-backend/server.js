@@ -3,6 +3,9 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
+const cors = require('cors');
+app.use( cors() ); // get this package to set the cors header for us
+
 app.listen(PORT, () => {
   console.log(`Server listening at http://localhost:${PORT} ...`);
 });
@@ -40,6 +43,17 @@ app.get('/',  (req, res) => {
 }); // GET /
 
 
+// // Set up a generic handler that runs first for ANY route
+// app.use( (req, res, next) => {
+//   console.log('request: ', req.url);
+//
+//   // set header here once so we don't have to do it
+//   // separately inside each specific router handler
+//   res.header('Access-Control-Allow-Origin', '*');
+//
+//   next(); // move on to the next route handler below in the middleware stack
+// });
+
 app.get('/flights/search/:origin/:destination', async (req, res) => {
 
   console.log('params', req.params);
@@ -50,8 +64,6 @@ app.get('/flights/search/:origin/:destination', async (req, res) => {
   //   { flight_number: 'BA123' },
   //   { flight_number: 'BA456'}
   // ]);
-
-  res.header('Access-Control-Allow-Origin', '*');
 
   try {
     // const query = { origin: req.params.origin, destination: req.params.destination }; // like strong params
@@ -64,3 +76,11 @@ app.get('/flights/search/:origin/:destination', async (req, res) => {
   }
 
 }); // GET /flights/search/:origin/:destination
+
+
+app.get('/flights/:id', async (req, res) => {
+
+  const flight = await Flight.findOne({ _id: req.params.id });
+  res.json( flight );
+
+}); // GET /flights/:id

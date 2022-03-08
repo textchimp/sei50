@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const Flight = require('./Flight');
 
 // Connect to DB server; note the DB selection: 'ba', like a path
-mongoose.connect('mongodb://localhost/ba');
+mongoose.connect('mongodb://127.0.0.1/ba');
 
 const db = mongoose.connection;
 
@@ -27,9 +27,13 @@ db.once('open', async () => {
   //     console.log('Error querying flights:', err);
   //   });
 
+  await Flight.deleteMany();
 
   // Flight.destroy_all
-  await Flight.deleteMany();
+  // Flight.deleteMany()
+  //   .then( res => {
+  //     Flight.create(...);
+  //   });
 
   // Same as ActiveRecord Flight.create except you can pass in an array
   // to specify multiple flights to create at the same time

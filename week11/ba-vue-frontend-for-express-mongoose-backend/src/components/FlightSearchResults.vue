@@ -25,13 +25,12 @@
 </template>
 
 <script>
-
-import axios from 'axios';
 import { DateTime } from 'luxon';
+import { fetchFlightSearchResults } from '../lib/api';
 
 window.testDateTime = DateTime;  // just for debugging
 
-const API_BASE_URL = 'http://localhost:3000/';
+// const API_BASE_URL = 'http://localhost:3000/';
 
 export default {
   name: 'FlightSearchResults',
@@ -51,8 +50,10 @@ export default {
     // console.log('Component mounted', this.origin, this.destination);
 
     try {
-      const url = `${API_BASE_URL}flights/search/${this.origin}/${this.destination}`;
-      const res = await axios.get(url);
+      // const res = await axios.get(url);
+
+      const res = await fetchFlightSearchResults(this.origin, this.destination );
+
       this.flights = res.data;  // save AJAX response into Vue state
       this.loading = false;
       // console.log('response', res.data);

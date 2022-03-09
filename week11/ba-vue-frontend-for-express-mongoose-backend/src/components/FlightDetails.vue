@@ -75,14 +75,12 @@
 
 <script>
 
+import { fetchFlightDetails, createReservation } from '../lib/api';
+
 import ReservationConfirm from './ReservationConfirm';
 
 // Fake a logged-in user ID
 const FAKE_USER_ID = 10; // Use your own user ID from reservation state!
-
-import axios from 'axios';
-
-const API_BASE_URL = 'http://localhost:3000/';
 
 export default {
   name: 'FlightDetails',
@@ -122,12 +120,7 @@ export default {
       // probably check that there isn't already a booking for
       // that row:col - use a validation?
       try {
-        const url = `${API_BASE_URL}reservations`;
-        const res = await axios.post(url, {
-          flight_id: this.id,
-          row: this.selectedSeat.row,
-          col: this.selectedSeat.col
-        });
+        const res = await createReservation(this.id, this.selectedSeat.row, this.selectedSeat.col);
         console.log('reservation response:', res.data);
 
         // Stop the confirmation child component from displaying
@@ -201,8 +194,7 @@ export default {
 
     async getFlight(){
       try {
-        const url = `${API_BASE_URL}flights/${ this.id }`;
-        const res = await axios.get(url);
+        const res = await fetchFlightDetails( this.id );
         console.log('flight', res.data);
         this.flight = res.data;
         this.loading = false;

@@ -25,8 +25,10 @@ export default new Router({
     {
       // <Route path="/" component={ HelloWorld } />
       path: '/',
-      name: 'HelloWorld',  // Rails path helper
-      component: HelloWorld
+      // name: 'HelloWorld',  // Rails path helper
+      // component: HelloWorld
+
+      redirect: '/search'
     },
     {
       path: '/search',

@@ -3,6 +3,9 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
+const flightsController = require('./controllers/flightsController');
+
+
 const cors = require('cors');
 app.use( cors() ); // get this package to set the cors header for us
 
@@ -44,9 +47,7 @@ db.on('error', (err) => {
 //  'response'
 // end
 
-app.get('/',  (req, res) => {
-  res.send('Welcome to the BA backend!');
-}); // GET /
+app.get('/',  flightsController.home );
 
 
 // // Set up a generic handler that runs first for ANY route
@@ -60,28 +61,7 @@ app.get('/',  (req, res) => {
 //   next(); // move on to the next route handler below in the middleware stack
 // });
 
-app.get('/flights/search/:origin/:destination', async (req, res) => {
-
-  console.log('params', req.params);
-
-  // Fake flights response
-
-  // res.json([
-  //   { flight_number: 'BA123' },
-  //   { flight_number: 'BA456'}
-  // ]);
-
-  try {
-    // const query = { origin: req.params.origin, destination: req.params.destination }; // like strong params
-    const {origin, destination} = req.params;
-    const flights = await Flight.find( {origin, destination} );
-    res.json( flights );
-  } catch( err ){
-    console.log('Error searching for flights', err);
-    res.sendStatus( 422 ); // 'Unprocessable entity'
-  }
-
-}); // GET /flights/search/:origin/:destination
+app.get('/flights/search/:origin/:destination', flightsController.search);
 
 
 app.get('/flights/:id', async (req, res) => {

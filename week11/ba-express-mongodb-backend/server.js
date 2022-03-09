@@ -108,9 +108,9 @@ app.post('/reservations', async (req, res) => {
 
   try {
 
-    const flight = await Flight.updateOne(
+    const result = await Flight.updateOne(
       // how to find the document to change:
-      { _id: req.body.flight_id  },
+      { _id: req.body.flight_id },
       // what to change about the retrieved document:
       {
         // loses existing reservations:
@@ -119,8 +119,16 @@ app.post('/reservations', async (req, res) => {
         $push: {
           reservations: newReservation
         }
-      }
+      },
     );
+
+    console.log('result:', result);
+
+    if( result.modifiedCount === 0 ){
+      throw new Error('Flight not found');
+      // res.json({ error: 'invalid Flight ID'}).sendStatus(404);
+      // return;
+    }
 
     res.json( newReservation ); // so the frontend can update its seating diagram
 

@@ -6,6 +6,12 @@ const PORT = 3000;
 const cors = require('cors');
 app.use( cors() ); // get this package to set the cors header for us
 
+
+// To support POSTed 'formdata' body content, we have to explicitly
+// add a new middleware handler
+app.use( express.json() );
+//app.use( express.urlencoded({ extended: true }) );  /// ???
+
 app.listen(PORT, () => {
   console.log(`Server listening at http://localhost:${PORT} ...`);
 });
@@ -84,3 +90,51 @@ app.get('/flights/:id', async (req, res) => {
   res.json( flight );
 
 }); // GET /flights/:id
+
+
+app.post('/reservations', async (req, res) => {
+  console.log('POST body:', req.body);
+
+  // flight = Flight.find params[:id]
+  // flight.update reservations: {new_reservation}
+
+
+  const newReservation = {
+    row: req.body.row,
+    col: req.body.col,
+    // user_id: req.user.id   // NOT YET...
+    user_id: 10 // same FAKE_USER_ID as used in frontend
+  }
+
+  try {
+
+    const flight = await Flight.updateOne(
+      // how to find the document to change:
+      { _id: req.body.flight_id  },
+      // what to change about the retrieved document:
+      {
+        // loses existing reservations:
+        // reservations: [ newReservation ]
+        // push onto the end of the array of reservations:
+        $push: {
+          reservations: newReservation
+        }
+      }
+    );
+
+    res.json( newReservation ); // so the frontend can update its seating diagram
+
+  } catch( err ){
+    console.log('Error saving reservation:', err);
+    res.sendStatus( 422 );
+  }
+
+
+  // res.json( {} );  // instead of next()
+
+}); // POST /reservations
+
+
+// app.use( (req, res) => {
+//   // error handler, no matching routes
+// });

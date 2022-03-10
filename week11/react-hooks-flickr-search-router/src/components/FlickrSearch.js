@@ -28,8 +28,9 @@ class FlickrSearch extends React.Component {
 
         <Router>
           <Routes>
-            <Route path="" element={ <SearchForm/> } />
-            <Route exact path="/search/:searchText" element={ <ThumbnailGallery/> } />
+            <Route path="" element={ <SearchForm/> }>
+              <Route exact path="/search/:searchText" element={ <ThumbnailGallery/> } />
+            </Route>
           </Routes>
         </Router>
 

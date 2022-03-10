@@ -1,6 +1,8 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+
+import { useParams } from 'react-router-dom';
 
 // TODO: import from some single file of global constants
 const FLICKR_API_KEY = '2f5ac274ecfac5a455f38745704ad084';
@@ -23,11 +25,25 @@ const FlickrImage = ({ photo, size }) => {
 // class ThumbnailGallery extends React.Component {
 function ThumbnailGallery( props ){
 
+  const [resultPhotos, setResultPhotos] = useState( [] );
+  const [loading, setLoading] = useState( true );
+  const [error, setError] = useState( null );
+
+  // The router no longer provides params data via the 'match' prop,
+  // it uses a custom hook:
+  const params = useParams();
+
+
+  useEffect( () => {
+    performSearch( params.searchText );
+  }, [] ); // an empty dependency array means 'run once at mount'
+
 
   async function performSearch( query ){
     console.log('FlickrSearch::performSearch()', query);
 
     // this.setState({ loading: true });
+    setLoading( true );
 
     const flickrParams = {
       method: 'flickr.photos.search',
@@ -44,9 +60,14 @@ function ThumbnailGallery( props ){
       //   resultPhotos: res.data.photos.photo,
       //   loading: false  // stop showing loading message
       // });
+      setResultPhotos( res.data.photos.photo );
+      setLoading( false ); // finished loading, show thumbnails via map()
+
     } catch( err ){
        console.log('Error in search AJAX: ', err);
        // this.setState({ error: err, loading: false });
+       setError( err );
+       setLoading( false );
     }
 
 
@@ -66,17 +87,16 @@ function ThumbnailGallery( props ){
       <div className="thumbnails">
 
         <h3>
-          Results for ______________
+          Results for { params.searchText }
         </h3>
 
       {
         // this.state.loading
-        true
+        loading
         ?
         <p>Loading results...</p>
         :
-        <p>photos go here</p>
-        //this.state.resultPhotos.map( photo => <FlickrImage photo={photo} size="q" /> )
+        resultPhotos.map( photo => <FlickrImage photo={photo} size="q" /> )
       }
       </div>
     );

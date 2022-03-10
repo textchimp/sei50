@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 
 function SearchForm( props ){
 
@@ -35,6 +35,7 @@ function SearchForm( props ){
         <input type="text" onChange={ handleInput } />
         <button>Search</button>
       </form>
+      <Outlet/> { /*  This is where the new child route ThumbnailGallery should appear */ }
     </div>
   );
 

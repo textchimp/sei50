@@ -25,7 +25,7 @@ class ThumbnailGallery extends React.Component {
 
   state = {
     resultPhotos: [],
-    loading: false,  // controls whether or not to show loading message
+    loading: true,  // controls whether or not to show loading message
     error: null  // whether or not to show an error message
   }
 

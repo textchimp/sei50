@@ -129,5 +129,17 @@ app.createParticleSystem = () => {
   particles.setAttribute('position', new THREE.Float32BufferAttribute( positions, 3 ) );
   particles.setAttribute('velocity', new THREE.Float32BufferAttribute( velocities, 3 ) );
 
+  const particleMaterial = new THREE.PointsMaterial({
+    color: 0xFFFFFF,
+    size: 6,
+    map: THREE.ImageUtils.loadTexture('img/snowflake.png'),
+    blending: THREE.AdditiveBlending, // add up brightness when particles overlap
+    transparent: true,
+    alphaTest: 0.5
+  });
+
+  const particleSystem = new THREE.Points( particles, particleMaterial );
+
+  return particleSystem;
 
 }; //createParticleSystem()

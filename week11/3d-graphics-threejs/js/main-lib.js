@@ -38,3 +38,19 @@ app.createSpotlight = () => {
   return light;
 
 }; // createSpotlight()
+
+
+app.createCube = (width, depth, height) => {
+
+  const cubeGeometry = new THREE.BoxGeometry( width, depth, height );
+  const cubeMaterial = new THREE.MeshLambertMaterial({
+    color: 0xFF8F00,
+    // wireframe: true
+  });
+
+  const cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
+  cube.position.set( -4, 15, 0 );
+  cube.castShadow = true;
+
+  return cube;
+}; // createCube

@@ -50,13 +50,30 @@ app.init = () => {
   app.scene.add( app.plane ); // add to scene
 
 
+  // 2. Add a cube! A perfect platonic solid
+  app.cube = app.createCube(4, 4, 4);
+  app.scene.add( app.cube );
+
   // Let there be light!
   app.spotlight = app.createSpotlight();
   app.scene.add( app.spotlight );
 
 
-  app.renderer.render( app.scene, app.camera );
+  // Use the mouse to control the camera perspective
+  app.mouseControls = new THREE.OrbitControls(
+    app.camera, app.renderer.domElement
+  );
+
+  app.animate(); // start the animation/draw loop
+
 }; // app.init()
+
+
+app.animate = () => {
+  app.renderer.render( app.scene, app.camera );
+  requestAnimationFrame( app.animate ); // 60 times/sec
+}; // animate()
+
 
 
 

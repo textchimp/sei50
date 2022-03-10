@@ -1,12 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
 import { useParams } from 'react-router-dom';
 
-// TODO: import from some single file of global constants
-const FLICKR_API_KEY = '2f5ac274ecfac5a455f38745704ad084';
-const FLICKR_BASE_URL = 'https://api.flickr.com/services/rest';
+// load our custom hook
+import { useFlickrSearchResults } from '../hooks/flickr';
 
 const FlickrImage = ({ photo, size }) => {
   // const {photo, size} = props;
@@ -25,63 +21,17 @@ const FlickrImage = ({ photo, size }) => {
 // class ThumbnailGallery extends React.Component {
 function ThumbnailGallery( props ){
 
-  const [resultPhotos, setResultPhotos] = useState( [] );
-  const [loading, setLoading] = useState( true );
-  const [error, setError] = useState( null );
-
-  // The router no longer provides params data via the 'match' prop,
+    // The router no longer provides params data via the 'match' prop,
   // it uses a custom hook:
   const params = useParams();
 
-
-  useEffect( () => {
-    performSearch( params.searchText );
-  }, [] ); // an empty dependency array means 'run once at mount'
-
-
-  async function performSearch( query ){
-    console.log('FlickrSearch::performSearch()', query);
-
-    // this.setState({ loading: true });
-    setLoading( true );
-
-    const flickrParams = {
-      method: 'flickr.photos.search',
-      api_key: FLICKR_API_KEY,
-      format: 'json',
-      nojsoncallback: 1,
-      text: query // should come from user input
-    };
-
-    try {
-      const res = await axios.get( FLICKR_BASE_URL, {params: flickrParams} );
-      console.log('response', res.data);
-      // this.setState({
-      //   resultPhotos: res.data.photos.photo,
-      //   loading: false  // stop showing loading message
-      // });
-      setResultPhotos( res.data.photos.photo );
-      setLoading( false ); // finished loading, show thumbnails via map()
-
-    } catch( err ){
-       console.log('Error in search AJAX: ', err);
-       // this.setState({ error: err, loading: false });
-       setError( err );
-       setLoading( false );
-    }
-
-
-  } // performSearch()
-
-
-
+  const { resultPhotos, loading, error } = useFlickrSearchResults( params.searchText );
 
     // Handle the special case where there is an error
-    // if( this.state.error !== null ){
-    //   // early return; never reach the later 'return'
-    //   return <p>Sorry, there was an error loading your results. Try again.</p>;
-    // }
-
+    if( error !== null ){
+      // early return; never reach the later 'return'
+      return <p>Sorry, there was an error loading your results. Try again.</p>;
+    }
 
     return (
       <div className="thumbnails">

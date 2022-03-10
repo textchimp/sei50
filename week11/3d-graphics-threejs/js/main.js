@@ -41,8 +41,21 @@ app.init = () => {
   app.scene.add( app.axes ); // create an axis visualiser and add it to the scene
 
 
-  app.renderer.render( app.scene, app.camera );
 
+
+  // add some cool shit
+
+  // 1. Add a 2D plane, i.e. a sheet, aka "The Runway"
+  app.plane = app.createPlane();
+  app.scene.add( app.plane ); // add to scene
+
+
+  // Let there be light!
+  app.spotlight = app.createSpotlight();
+  app.scene.add( app.spotlight );
+
+
+  app.renderer.render( app.scene, app.camera );
 }; // app.init()
 
 

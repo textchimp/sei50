@@ -46,6 +46,8 @@ app.createCube = (width, depth, height) => {
   const cubeGeometry = new THREE.BoxGeometry( width, depth, height );
   const cubeMaterial = new THREE.MeshLambertMaterial({
     color: 0xFF8F00,
+    // color: 0xFFFFFF,
+    // map: THREE.ImageUtils.loadTexture('img/earth.jpg'),
     // wireframe: true
   });
 
@@ -73,7 +75,8 @@ app.createSphere = () => {
   const sphereMaterial = new THREE.MeshPhongMaterial({
     color: 0xFFFFFF,
     map: THREE.ImageUtils.loadTexture('img/earth.jpg'), // requires local dev server
-    side: THREE.DoubleSide // show on both sides of sphere
+    side: THREE.DoubleSide, // show on both sides of sphere
+    // wireframe: true
   });
 
   const sphere = new THREE.Mesh( sphereGeometry, sphereMaterial );
@@ -97,3 +100,34 @@ app.addStats = () => {
   return stats;
 
 }; // addStats()
+
+
+app.createParticleSystem = () => {
+
+  const particles = new THREE.BufferGeometry();
+
+  const positions = [];
+  const velocities = [];
+
+  for( let i = 0; i < app.controls.numParticles ; i++ ){
+
+    positions.push(
+        THREE.Math.randInt(-200, 200), // x
+        THREE.Math.randInt(-200, 200), // y
+        THREE.Math.randInt(-200, 200), // z
+    );
+
+    velocities.push(
+      // Math.random() - 0.5
+      THREE.Math.randFloat(-0.5, 0.5), // x
+      THREE.Math.randFloat(-0.5, 0.5), // y
+      THREE.Math.randFloat(-0.5, 0.5), // z
+    );
+
+  } // for each particle
+
+  particles.setAttribute('position', new THREE.Float32BufferAttribute( positions, 3 ) );
+  particles.setAttribute('velocity', new THREE.Float32BufferAttribute( velocities, 3 ) );
+
+
+}; //createParticleSystem()

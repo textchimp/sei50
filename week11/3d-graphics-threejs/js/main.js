@@ -7,7 +7,8 @@ var app = app || {};
 app.controls = {
   rotationSpeed: 0.01, // to control cube rotation
   counter: 0,
-  counterIncrement: 0.03 // how fast the counter grows
+  counterIncrement: 0.03, // how fast the counter grows
+  numParticles: 1000,
 };
 
 app.init = () => {
@@ -86,9 +87,17 @@ app.init = () => {
   app.scene.add( app.sphere );
 
 
+  app.particleSystem = app.createParticleSystem();
+  app.scene.add( app.particleSystem );
+
+
   // Let there be light!
   app.spotlight = app.createSpotlight();
   app.scene.add( app.spotlight );
+
+  app.ambientLight = new THREE.AmbientLight( 0x555555 );
+  app.scene.add( app.ambientLight );
+
 
   // const spotLightHelper = new THREE.SpotLightHelper( app.spotlight );
   // app.scene.add( spotLightHelper );
@@ -122,6 +131,8 @@ app.animate = () => {
   // const sphereXOffset = Math.cos( app.controls.counter );
   // app.sphere.position.x = 20 + (sphereXOffset * 15)
 
+  // Georealistic rotation
+  app.sphere.rotation.y += app.controls.rotationSpeed;
 
   app.cube.rotation.x += app.controls.rotationSpeed;
   app.cube.rotation.y += app.controls.rotationSpeed*2;

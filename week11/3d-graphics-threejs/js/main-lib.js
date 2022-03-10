@@ -20,7 +20,7 @@ app.createPlane = () => {
 
   plane.position.set( 15, 0, 0 ); // x, y, z
   plane.rotation.x = -0.5 * Math.PI;  // because of maths
-  plane.receiveShadow = true; // shadows should be cast onto this
+  // plane.receiveShadow = true; // shadows should be cast onto this
 
   return plane;
 
@@ -31,9 +31,9 @@ app.createSpotlight = () => {
 
   const light = new THREE.SpotLight( 0xFFFFFF );
   light.position.set( -10, 60, 10 );
-  light.castShadow = true;
-  light.shadow.mapSize.width = 2048;
-  light.shadow.mapSize.height = 2048;
+  // light.castShadow = true;
+  // light.shadow.mapSize.width = 2048;
+  // light.shadow.mapSize.height = 2048;
   // light.angle = Math.PI/4;
   // light.distance = 200;
   return light;
@@ -50,13 +50,13 @@ app.createCube = (width, depth, height) => {
   });
 
   const cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
-  // cube.position.set( -4, 15, 0 );
-  cube.position.set(
-    THREE.MathUtils.randInt(-50, 50),
-    THREE.MathUtils.randInt(-50, 50),
-    THREE.MathUtils.randInt(-50, 50),
-  );
-  cube.castShadow = true;
+  cube.position.set( -4, 15, 0 );
+  // cube.position.set(
+  //   THREE.MathUtils.randInt(-50, 50),
+  //   THREE.MathUtils.randInt(-50, 50),
+  //   THREE.MathUtils.randInt(-50, 50),
+  // );
+  // cube.castShadow = true;
 
   return cube;
 }; // createCube
@@ -76,8 +76,22 @@ app.createSphere = () => {
 
   const sphere = new THREE.Mesh( sphereGeometry, sphereMaterial );
   sphere.position.set( 20, 6, 2 );
-  sphere.castShadow = true;
+  // sphere.castShadow = true;
 
   return sphere;
 
 }; // createSphere()
+
+
+app.addStats = () => {
+
+  const stats = new Stats();
+  stats.setMode( 0 );
+  stats.domElement.style.position = 'absolute';
+  stats.domElement.style.left = '0px';
+  stats.domElement.style.top = '0px';
+  document.getElementById('stats').appendChild( stats.domElement );
+
+  return stats;
+
+}; // addStats()

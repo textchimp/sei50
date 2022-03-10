@@ -13,6 +13,11 @@ app.controls = {
 app.init = () => {
   console.log('init()');
 
+  app.gui = new dat.GUI();
+  app.gui.add( app.controls, 'rotationSpeed', 0, 0.2 );
+  app.gui.add( app.controls, 'counterIncrement', 0, 1.0 ).name('Bounce Speed');
+
+
   app.scene = new THREE.Scene();
 
   app.camera = new THREE.PerspectiveCamera(
@@ -37,8 +42,8 @@ app.init = () => {
   app.renderer.setClearColor( 0x000000 ); // background colour
 
   // Casting shadows is computationally expensive, so we have to opt in:
-  app.renderer.shadowMap.enabled = true;
-  app.renderer.shadowMap.type = THREE.PCFSoftShadowMap; // WTF?
+  // app.renderer.shadowMap.enabled = true;
+  // app.renderer.shadowMap.type = THREE.PCFSoftShadowMap; // WTF?
 
   document.getElementById('output').appendChild( app.renderer.domElement );
 
@@ -52,27 +57,27 @@ app.init = () => {
   // add some cool shit
 
   // 1. Add a 2D plane, i.e. a sheet, aka "The Runway"
-  app.plane = app.createPlane();
-  app.scene.add( app.plane ); // add to scene
+  // app.plane = app.createPlane();
+  // app.scene.add( app.plane ); // add to scene
 
 
   // 2. Add a cube! A perfect platonic solid
 
-  app.cubes = [];
-
-  for( let i = 0; i < 100; i++ ){
-    const cube =  app.createCube(
-      THREE.MathUtils.randInt(10, 100),
-      4,
-      4
-    );
-    app.scene.add( cube );
-    app.cubes.push( cube );
-  }
+  // app.cubes = [];
+  //
+  // for( let i = 0; i < 100; i++ ){
+  //   const cube =  app.createCube(
+  //     THREE.MathUtils.randInt(10, 100),
+  //     4,
+  //     4
+  //   );
+  //   app.scene.add( cube );
+  //   app.cubes.push( cube );
+  // }
 
   //
-  // app.cube = app.createCube(4, 4, 4);
-  // app.scene.add( app.cube );
+  app.cube = app.createCube(4, 4, 4);
+  app.scene.add( app.cube );
 
   // 3. Add a sphere.... a ball... a planet...
   // every point on the surface the same distance
@@ -94,6 +99,8 @@ app.init = () => {
     app.camera, app.renderer.domElement
   );
 
+  app.stats = app.addStats();
+
   app.animate(); // start the animation/draw loop
 
 }; // app.init()
@@ -101,6 +108,8 @@ app.init = () => {
 
 // animation loop, running at 60 frames/sec iedally
 app.animate = () => {
+
+  app.stats.update();
 
   app.controls.counter += app.controls.counterIncrement;
 
@@ -113,17 +122,26 @@ app.animate = () => {
   app.sphere.position.x = 20 + (sphereXOffset * 15)
 
 
-  // app.cube.rotation.x += app.controls.rotationSpeed;
-  // app.cube.rotation.y += app.controls.rotationSpeed*2;
-  // app.cube.rotation.z += app.controls.rotationSpeed;
+  app.cube.rotation.x += app.controls.rotationSpeed;
+  app.cube.rotation.y += app.controls.rotationSpeed*2;
+  app.cube.rotation.z += app.controls.rotationSpeed;
 
   app.renderer.render( app.scene, app.camera );
   requestAnimationFrame( app.animate ); // 60 times/sec
 
 }; // animate()
 
-
-
-
 // oldskool dom readiness handler:
 window.onload = app.init;
+
+
+app.onResize = () => {
+  // Update THREE.js internals whenever the browser
+  // window size changes
+  app.camera.aspect = window.innerWidth / window.innerHeight;
+  app.camera.updateProjectionMatrix();
+  app.renderer.setSize( window.innerWidth, window.innerHeight );
+}; // onResize()
+
+// window.onresize = app.onResize;
+window.addEventListener( 'resize', app.onResize );

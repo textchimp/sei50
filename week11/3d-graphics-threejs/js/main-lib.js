@@ -50,7 +50,12 @@ app.createCube = (width, depth, height) => {
   });
 
   const cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
-  cube.position.set( -4, 15, 0 );
+  // cube.position.set( -4, 15, 0 );
+  cube.position.set(
+    THREE.MathUtils.randInt(-50, 50),
+    THREE.MathUtils.randInt(-50, 50),
+    THREE.MathUtils.randInt(-50, 50),
+  );
   cube.castShadow = true;
 
   return cube;

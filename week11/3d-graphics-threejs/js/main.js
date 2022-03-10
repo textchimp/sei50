@@ -7,7 +7,7 @@ var app = app || {};
 app.controls = {
   rotationSpeed: 0.01, // to control cube rotation
   counter: 0,
-  counterIncrement: 0.01 // how fast the counter grows
+  counterIncrement: 0.03 // how fast the counter grows
 };
 
 app.init = () => {
@@ -57,8 +57,22 @@ app.init = () => {
 
 
   // 2. Add a cube! A perfect platonic solid
-  app.cube = app.createCube(4, 4, 4);
-  app.scene.add( app.cube );
+
+  app.cubes = [];
+
+  for( let i = 0; i < 100; i++ ){
+    const cube =  app.createCube(
+      THREE.MathUtils.randInt(10, 100),
+      4,
+      4
+    );
+    app.scene.add( cube );
+    app.cubes.push( cube );
+  }
+
+  //
+  // app.cube = app.createCube(4, 4, 4);
+  // app.scene.add( app.cube );
 
   // 3. Add a sphere.... a ball... a planet...
   // every point on the surface the same distance
@@ -92,11 +106,16 @@ app.animate = () => {
 
   const sphereYOffset = Math.sin( app.controls.counter );
   // console.log('counter:', app.controls.counter);
-  console.log('sin offset:', sphereYOffset);
+  // console.log('sin offset:', sphereYOffset);
+  app.sphere.position.y = 6 + Math.abs(sphereYOffset * 15);
 
-  app.cube.rotation.x += app.controls.rotationSpeed;
-  app.cube.rotation.y += app.controls.rotationSpeed*2;
-  app.cube.rotation.z += app.controls.rotationSpeed;
+  const sphereXOffset = Math.cos( app.controls.counter );
+  app.sphere.position.x = 20 + (sphereXOffset * 15)
+
+
+  // app.cube.rotation.x += app.controls.rotationSpeed;
+  // app.cube.rotation.y += app.controls.rotationSpeed*2;
+  // app.cube.rotation.z += app.controls.rotationSpeed;
 
   app.renderer.render( app.scene, app.camera );
   requestAnimationFrame( app.animate ); // 60 times/sec

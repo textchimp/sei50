@@ -71,11 +71,13 @@ app.createSphere = () => {
   );
 
   const sphereMaterial = new THREE.MeshPhongMaterial({
-    color: 0x039BE5
+    color: 0xFFFFFF,
+    map: THREE.ImageUtils.loadTexture('img/earth.jpg'), // requires local dev server
+    side: THREE.DoubleSide // show on both sides of sphere
   });
 
   const sphere = new THREE.Mesh( sphereGeometry, sphereMaterial );
-  sphere.position.set( 20, 6, 2 );
+  sphere.position.set( 0, 0, 0 );
   // sphere.castShadow = true;
 
   return sphere;

@@ -48,8 +48,8 @@ app.init = () => {
   document.getElementById('output').appendChild( app.renderer.domElement );
 
 
-  app.axes = new THREE.AxesHelper( 50 );
-  app.scene.add( app.axes ); // create an axis visualiser and add it to the scene
+  // app.axes = new THREE.AxesHelper( 50 );
+  // app.scene.add( app.axes ); // create an axis visualiser and add it to the scene
 
 
 
@@ -113,13 +113,14 @@ app.animate = () => {
 
   app.controls.counter += app.controls.counterIncrement;
 
-  const sphereYOffset = Math.sin( app.controls.counter );
-  // console.log('counter:', app.controls.counter);
-  // console.log('sin offset:', sphereYOffset);
-  app.sphere.position.y = 6 + Math.abs(sphereYOffset * 15);
-
-  const sphereXOffset = Math.cos( app.controls.counter );
-  app.sphere.position.x = 20 + (sphereXOffset * 15)
+  // // Bouncing effect:
+  // const sphereYOffset = Math.sin( app.controls.counter );
+  // // console.log('counter:', app.controls.counter);
+  // // console.log('sin offset:', sphereYOffset);
+  // app.sphere.position.y = 6 + Math.abs(sphereYOffset * 15);
+  //
+  // const sphereXOffset = Math.cos( app.controls.counter );
+  // app.sphere.position.x = 20 + (sphereXOffset * 15)
 
 
   app.cube.rotation.x += app.controls.rotationSpeed;

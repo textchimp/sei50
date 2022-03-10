@@ -3,12 +3,17 @@ console.log('main.js loaded');
 // use the existing 'app' object (if the other main file loaded first) or, if it's not yet defined, initialise it as an empty object
 var app = app || {};
 
+const params = new URLSearchParams(window.location.search);
+
+// console.log('p', params.get('p') );
+
 // ready for dat.gui
 app.controls = {
   rotationSpeed: 0.01, // to control cube rotation
   counter: 0,
   counterIncrement: 0.03, // how fast the counter grows
-  numParticles: 1000,
+  numParticles: parseInt(params.get('p')) || 1000,
+  particleDistribution: 200
 };
 
 app.init = () => {
@@ -120,6 +125,8 @@ app.animate = () => {
 
   app.stats.update();
 
+  app.animateParticles();
+
   app.controls.counter += app.controls.counterIncrement;
 
   // // Bouncing effect:
@@ -142,6 +149,33 @@ app.animate = () => {
   requestAnimationFrame( app.animate ); // 60 times/sec
 
 }; // animate()
+
+
+app.animateParticles = () => {
+
+  const positions = app.particleSystem.geometry.attributes.position.array;
+  const velocities = app.particleSystem.geometry.attributes.velocity.array;
+
+  for( let i = 0; i < app.controls.numParticles; i++ ){
+
+    //  // first    // second  // third
+    // [ 1, 2, 3,   4, 5, 6,   7, 8, 9   ]
+
+    const xIndex = i * 3 + 0; // x
+    const yIndex = i * 3 + 1; // y
+    const zIndex = i * 3 + 2; // y
+
+    // make all the stars move down by the same amount
+    positions[yIndex] += -0.5;
+
+  } // for
+
+  // Tell THREE.js that something has changed about the particle system
+  app.particleSystem.geometry.attributes.position.needsUpdate = true;
+
+}; // animateParticles()
+
+
 
 // oldskool dom readiness handler:
 window.onload = app.init;

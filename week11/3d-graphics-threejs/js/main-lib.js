@@ -104,6 +104,8 @@ app.addStats = () => {
 
 app.createParticleSystem = () => {
 
+  const distrib = app.controls.particleDistribution;
+
   const particles = new THREE.BufferGeometry();
 
   const positions = [];
@@ -112,9 +114,9 @@ app.createParticleSystem = () => {
   for( let i = 0; i < app.controls.numParticles ; i++ ){
 
     positions.push(
-        THREE.Math.randInt(-200, 200), // x
-        THREE.Math.randInt(-200, 200), // y
-        THREE.Math.randInt(-200, 200), // z
+        THREE.Math.randInt(-distrib, distrib), // x
+        THREE.Math.randInt(-distrib, distrib), // y
+        THREE.Math.randInt(-distrib, distrib), // z
     );
 
     velocities.push(

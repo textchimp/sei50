@@ -1,12 +1,21 @@
 
 import React, { useState } from 'react';
 
+import { useNavigate } from 'react-router-dom';
+
 function SearchForm( props ){
 
   const [searchText, setSearchText] = useState('');
   // const array = useState('');
   // const searchText = array[0];
   // const setSearchText = array[1];
+
+  // Instead of the router providing the 'history' object
+  // (which include the 'push()' method we need,
+  // v6 now gives us the history object via a hook: useHistory()
+  // .... EXCEPT it's changed again, and now to get the equivalent
+  // of the push method we use the hook called useNavigate()
+  const navigate = useNavigate();
 
   function handleInput( ev ){
     setSearchText( ev.target.value );
@@ -15,7 +24,8 @@ function SearchForm( props ){
 
   function handleSubmit( ev ){
     ev.preventDefault();
-    props.history.push(`/search/${ searchText }`);
+    // props.history.push(`/search/${ searchText }`);
+    navigate(`/search/${ searchText }`);
   } // handleSubmit()
 
   return (

@@ -3,7 +3,7 @@ import React from 'react';
 import '../App.css';
 
 
-import {HashRouter as Router, Route} from 'react-router-dom';
+import {HashRouter as Router, Route, Routes} from 'react-router-dom';
 
 
 import SearchForm from './SearchForm';
@@ -27,8 +27,10 @@ class FlickrSearch extends React.Component {
         <hr/>
 
         <Router>
-          <Route path="" component={ SearchForm } />
-          <Route exact path="/search/:searchText" component={ ThumbnailGallery } />
+          <Routes>
+            <Route path="" element={ <SearchForm/> } />
+            <Route exact path="/search/:searchText" element={ <ThumbnailGallery/> } />
+          </Routes>
         </Router>
 
         {

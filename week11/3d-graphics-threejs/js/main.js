@@ -3,6 +3,12 @@ console.log('main.js loaded');
 // use the existing 'app' object (if the other main file loaded first) or, if it's not yet defined, initialise it as an empty object
 var app = app || {};
 
+// ready for dat.gui
+app.controls = {
+  rotationSpeed: 0.01, // to control cube rotation
+  counter: 0,
+  counterIncrement: 0.01 // how fast the counter grows
+};
 
 app.init = () => {
   console.log('init()');
@@ -65,6 +71,9 @@ app.init = () => {
   app.spotlight = app.createSpotlight();
   app.scene.add( app.spotlight );
 
+  // const spotLightHelper = new THREE.SpotLightHelper( app.spotlight );
+  // app.scene.add( spotLightHelper );
+
 
   // Use the mouse to control the camera perspective
   app.mouseControls = new THREE.OrbitControls(
@@ -76,9 +85,22 @@ app.init = () => {
 }; // app.init()
 
 
+// animation loop, running at 60 frames/sec iedally
 app.animate = () => {
+
+  app.controls.counter += app.controls.counterIncrement;
+
+  const sphereYOffset = Math.sin( app.controls.counter );
+  // console.log('counter:', app.controls.counter);
+  console.log('sin offset:', sphereYOffset);
+
+  app.cube.rotation.x += app.controls.rotationSpeed;
+  app.cube.rotation.y += app.controls.rotationSpeed*2;
+  app.cube.rotation.z += app.controls.rotationSpeed;
+
   app.renderer.render( app.scene, app.camera );
   requestAnimationFrame( app.animate ); // 60 times/sec
+
 }; // animate()
 
 

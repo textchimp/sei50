@@ -34,7 +34,8 @@ app.createSpotlight = () => {
   light.castShadow = true;
   light.shadow.mapSize.width = 2048;
   light.shadow.mapSize.height = 2048;
-
+  // light.angle = Math.PI/4;
+  // light.distance = 200;
   return light;
 
 }; // createSpotlight()

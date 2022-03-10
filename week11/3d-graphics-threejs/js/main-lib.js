@@ -54,3 +54,24 @@ app.createCube = (width, depth, height) => {
 
   return cube;
 }; // createCube
+
+
+app.createSphere = () => {
+
+  const sphereGeometry = new THREE.SphereGeometry(
+    6, // radius
+    40, // number of triangle segments on the X axis
+    40, // same for Y axis
+  );
+
+  const sphereMaterial = new THREE.MeshPhongMaterial({
+    color: 0x039BE5
+  });
+
+  const sphere = new THREE.Mesh( sphereGeometry, sphereMaterial );
+  sphere.position.set( 20, 6, 2 );
+  sphere.castShadow = true;
+
+  return sphere;
+
+}; // createSphere()

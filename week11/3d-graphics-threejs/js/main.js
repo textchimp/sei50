@@ -54,6 +54,13 @@ app.init = () => {
   app.cube = app.createCube(4, 4, 4);
   app.scene.add( app.cube );
 
+  // 3. Add a sphere.... a ball... a planet...
+  // every point on the surface the same distance
+  // from the center... our new home
+  app.sphere = app.createSphere();
+  app.scene.add( app.sphere );
+
+
   // Let there be light!
   app.spotlight = app.createSpotlight();
   app.scene.add( app.spotlight );

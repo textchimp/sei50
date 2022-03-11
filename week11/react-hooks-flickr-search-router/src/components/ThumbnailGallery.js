@@ -6,18 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // load our custom hook
 import { useFlickrSearchResults } from '../hooks/flickr';
 
-const FlickrImage = ({ photo, size }) => {
-  // const {photo, size} = props;
-
-  return (
-    <img
-       src={`https://live.staticflickr.com/${ photo.server }/${ photo.id }_${photo.secret}_${ size }.jpg`}
-       alt={ photo.title }
-    />
-  );
-
-}; // generateImageURL()
-
+import FlickrImage from './FlickrImage';
 
 
 // class ThumbnailGallery extends React.Component {
@@ -35,7 +24,7 @@ function ThumbnailGallery( props ){
 
   function handleClick(){
     console.log('button clicked');
-    dispatch({ type: 'clickCounter/incremented' });
+    dispatch({ type: 'clickCounter/incrementedBy', payload: 20 });
   }
 
     // Handle the special case where there is an error

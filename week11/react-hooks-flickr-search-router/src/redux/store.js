@@ -4,6 +4,7 @@ import { createStore } from 'redux';
 const initialState = {
   counter: 0,
   // more key-val pairs can go here
+  favouritePhotos: [],
 };
 
 // A reducer is a pure function that takes the current state object,
@@ -31,6 +32,25 @@ function reducer( state=initialState, action ){
         counter: state.counter - 1
       };
 
+    case 'clickCounter/incrementedBy':
+      return {
+        ...state,
+        counter: state.counter + action.payload
+      };
+
+    case 'favourites/added':
+      return {
+        ...state,  // i.e. keep the 'counter' state
+        favouritePhotos: [
+          ...state.favouritePhotos, // copy the existing items
+          action.payload // add the new item at the end
+        ]
+      };
+
+      // TODO: implement the 'favourites/removed'
+
+
+
 
     default:
       // Fallback in case no action is matched -
@@ -48,3 +68,9 @@ export const store = createStore(
   // might need to merge with the above 'initialState' object?
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__({trace: true})
 );
+
+store.subscribe( () => {
+  const state = store.getState();
+  // save to localStorage ??
+  console.log('Redux update:', state);
+})

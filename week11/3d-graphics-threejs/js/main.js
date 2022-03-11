@@ -13,7 +13,7 @@ app.controls = {
   counter: 0,
   counterIncrement: 0.03, // how fast the counter grows
   numParticles: parseInt(params.get('p')) || 1000,
-  particleDistribution: 200
+  particleDistribution: 50
 };
 
 app.init = () => {
@@ -165,8 +165,20 @@ app.animateParticles = () => {
     const yIndex = i * 3 + 1; // y
     const zIndex = i * 3 + 2; // y
 
-    // make all the stars move down by the same amount
-    positions[yIndex] += -0.5;
+    // // Star waterfall effect
+    // // make all the stars move down by the same amount
+    // positions[yIndex] += -0.5;
+    //
+    // // Prevent the stars from falling too far down
+    // if( positions[yIndex] < -app.controls.particleDistribution ){
+    //   // warp/teleport the star back to the top of the range
+    //   positions[yIndex] = app.controls.particleDistribution;
+    // }
+
+    // Use the unique xyz velocity of each star to update its xyz position
+    positions[xIndex] += velocities[xIndex];
+    positions[yIndex] += velocities[yIndex];
+    positions[zIndex] += velocities[zIndex];
 
   } // for
 

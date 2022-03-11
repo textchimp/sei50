@@ -28,7 +28,7 @@ function reducer( state=initialState, action ){
     case 'clickCounter/decremented':
       return {
         ...state,
-        counter: counter - 1
+        counter: state.counter - 1
       };
 
 

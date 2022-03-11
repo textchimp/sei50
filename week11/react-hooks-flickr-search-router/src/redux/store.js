@@ -25,6 +25,12 @@ function reducer( state=initialState, action ){
       }; // return new state object
       // break; // don't need this because we return
 
+    case 'clickCounter/decremented':
+      return {
+        ...state,
+        counter: counter - 1
+      };
+
 
     default:
       // Fallback in case no action is matched -

@@ -25,6 +25,7 @@ function reducer( state=initialState, action ){
       }; // return new state object
       // break; // don't need this because we return
 
+
     default:
       // Fallback in case no action is matched -
       // return the current state unchanged
@@ -34,6 +35,7 @@ function reducer( state=initialState, action ){
 
 } // reducer()
 
+// Single named export 'store'
 export const store = createStore(
   reducer,
   // optional argument here: initial state value, perhaps from localStorage or DB?

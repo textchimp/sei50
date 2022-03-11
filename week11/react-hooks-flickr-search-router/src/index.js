@@ -5,7 +5,12 @@ import './index.css';
 import FlickrSearch from './components/FlickrSearch';
 
 
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+
 ReactDOM.render(
-  <FlickrSearch />,
+  <Provider store={ store }>
+    <FlickrSearch />
+  </Provider>,
   document.getElementById('root')
 );

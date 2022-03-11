@@ -3,7 +3,15 @@ import React, { useState } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
 
+import { useSelector } from 'react-redux';
+
 function SearchForm( props ){
+
+  // Use the useSelector hook to get access to some part of the Redux global store
+  // Like any hook, this is "reactive" - if the data changes, it triggers your
+  // component to re-render (i.e. the whole SearchForm function runs again so
+  // it gets the latest value, as if "notified" of changes to that global state)
+  const counter = useSelector( state => state.counter );
 
   const [searchText, setSearchText] = useState('');
   // const array = useState('');
@@ -30,7 +38,7 @@ function SearchForm( props ){
 
   return (
     <div>
-      <h3>{ searchText }</h3>
+      <h3>Redux counter value: { counter }</h3>
       <form onSubmit={ handleSubmit }>
         <input type="text" onChange={ handleInput } />
         <button>Search</button>

@@ -40,11 +40,9 @@ const FlightSchema = new mongoose.Schema({
 }); // end of new mongoose.Schema({...})
 
 
-// This model method can't be an arrow function because
-// Mongoose needs to set the value of 'this' to refer
-// to "the current flight" for us
-// i.e. if we write f1.saveReservation()
-// then 'this' will refer to 'f1'
+// This model method can't be an arrow function because Mongoose needs to set
+// the value of 'this' to refer to "the current flight" for us
+// i.e. if we write f1.saveReservation() then 'this' will refer to 'f1'
 FlightSchema.methods.saveReservation = async function(row, col, user){
 
   // Save our new reservation into both the current flight

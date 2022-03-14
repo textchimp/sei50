@@ -84,7 +84,7 @@ db.once('open', async () => {
     const flights = await Flight.find();
     console.log('flights:', flights);
 
-    // Let's also add some Users
+    // Let's also add some Users; pass in created flights for adding associations
     await createUsers(flights);
 
   } catch ( err ){
@@ -93,8 +93,6 @@ db.once('open', async () => {
     db.close(); // close the connection
     process.exit(1);
   }
-
-  // console.log('Created flights:', results);
 
   process.exit(0); // all good, quit program
 
@@ -105,7 +103,7 @@ const createUsers = async (testFlights) => {
 
   await User.deleteMany(); // User.destroy_all
 
-  const results = await User.create([
+  let users = await User.create([
     {
       name: 'Test User 1',
       email: 'one@one.com',
@@ -139,24 +137,22 @@ const createUsers = async (testFlights) => {
     },
   ]);
 
-  // console.log(
-  //   `Created Users:`,
-  //   results.map( u => u.reservations)
-  // );
-
+  // console.log( `Created Users:`, results.map( u => u.reservations) );
   // console.log(results[0].reservations, results[1].reservations);
 
-  // To actually get the details of a Flight reference
-  // (which is within the reservations array) when we query
-  // the User, you need to use .populate()
-  let users = await User.find({}); //.populate('reservations.flight');
+  // let users = await User.find({}); //.populate('reservations.flight');
 
+
+  // Use the 'saveReservation()' method of the Flight model to save duplicate
+  // reservation entries in both Flight reservations and User reservations
   await testFlights[0].saveReservation( 10, 1, users[0] );
   await testFlights[1].saveReservation( 10, 2, users[1] );
   await testFlights[1].saveReservation( 10, 2, users[1] );
 
-  users = await User.find({}).populate('reservations.flight');
-
+  // Re-load query, this time including reservation flight association;
+  // to get the details of a Flight reference (which is within the reservations
+  // array) when we query the User, you need to use .populate()
+  users = await User.find().populate('reservations.flight');
 
   console.log('Created users:', users);
   console.log(users[0].reservations, users[1].reservations);

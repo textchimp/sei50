@@ -85,7 +85,7 @@ db.once('open', async () => {
     console.log('flights:', flights);
 
     // Let's also add some Users
-    await createUsers();
+    await createUsers(flights);
 
   } catch ( err ){
     console.log('Error finding flights:', err);
@@ -101,7 +101,7 @@ db.once('open', async () => {
 }); // once open
 
 
-const createUsers = async () => {
+const createUsers = async (testFlights) => {
 
   await User.deleteMany(); // User.destroy_all
 
@@ -110,15 +110,47 @@ const createUsers = async () => {
       name: 'Test User 1',
       email: 'one@one.com',
       // password: 'chicken',
-      passwordDigest: bcrypt.hashSync('chicken', 10)
+      passwordDigest: bcrypt.hashSync('chicken', 10),
+      reservations: [
+        {
+          row: 10,
+          col: 1,
+          // need to give an actual flight object (document)
+          flight: testFlights[0],
+        },
+        {
+          row: 11,
+          col: 12,
+          flight: testFlights[1]
+        }
+      ],
     },
     {
       name: 'Test User 2',
       email: 'two@two.com',
-      passwordDigest: bcrypt.hashSync('chicken', 10)
+      passwordDigest: bcrypt.hashSync('chicken', 10),
+      reservations: [
+        {
+          row: 1,
+          col: 2,
+          flight: testFlights[0]
+        }
+      ]
     },
   ]);
 
-  console.log(`Created Users:`, results);
+  // console.log(
+  //   `Created Users:`,
+  //   results.map( u => u.reservations)
+  // );
+
+  // console.log(results[0].reservations, results[1].reservations);
+
+  // To actually get the details of a Flight reference
+  // (which is within the reservations array) when we query
+  // the User, you need to use .populate()
+  const users = await User.find({}).populate('reservations.flight');
+  console.log('Created users:', users);
+  console.log(users[0].reservations, users[1].reservations);
 
 }; // createUsers()

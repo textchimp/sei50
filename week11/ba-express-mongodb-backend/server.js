@@ -24,7 +24,7 @@ app.listen(PORT, () => {
 const mongoose = require('mongoose');
 
 // Load our Flight model file (and any others?)
-const Flight = require('./models/Flight');
+// const Flight = require('./models/Flight');
 
 // Connect to DB server; note the DB selection: 'ba', like a path
 mongoose.connect('mongodb://127.0.0.1/ba');
@@ -58,69 +58,14 @@ app.get('/',  flightsController.home );
 //   // separately inside each specific router handler
 //   res.header('Access-Control-Allow-Origin', '*');
 //
+     // req.user = getUser();
+
 //   next(); // move on to the next route handler below in the middleware stack
 // });
 
 app.get('/flights/search/:origin/:destination', flightsController.search);
-
-
-app.get('/flights/:id', async (req, res) => {
-
-  const flight = await Flight.findOne({ _id: req.params.id });
-  res.json( flight );
-
-}); // GET /flights/:id
-
-
-app.post('/reservations', async (req, res) => {
-  console.log('POST body:', req.body);
-
-  // flight = Flight.find params[:id]
-  // flight.update reservations: {new_reservation}
-
-
-  const newReservation = {
-    row: req.body.row,
-    col: req.body.col,
-    // user_id: req.user.id   // NOT YET...
-    user_id: 10 // same FAKE_USER_ID as used in frontend
-  }
-
-  try {
-
-    const result = await Flight.updateOne(
-      // how to find the document to change:
-      { _id: req.body.flight_id },
-      // what to change about the retrieved document:
-      {
-        // loses existing reservations:
-        // reservations: [ newReservation ]
-        // push onto the end of the array of reservations:
-        $push: {
-          reservations: newReservation
-        }
-      },
-    );
-
-    console.log('result:', result);
-
-    if( result.modifiedCount === 0 ){
-      throw new Error('Flight not found');
-      // res.json({ error: 'invalid Flight ID'}).sendStatus(404);
-      // return;
-    }
-
-    res.json( newReservation ); // so the frontend can update its seating diagram
-
-  } catch( err ){
-    console.log('Error saving reservation:', err);
-    res.sendStatus( 422 );
-  }
-
-
-  // res.json( {} );  // instead of next()
-
-}); // POST /reservations
+app.get('/flights/:id', flightsController.show );
+app.post('/reservations', flightsController.createReservation );
 
 
 // app.use( (req, res) => {

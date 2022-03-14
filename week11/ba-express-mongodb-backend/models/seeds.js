@@ -1,8 +1,10 @@
 
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt'); // to encrypt passwords for seeded users
 
 // Load our Flight model file (and any others?)
 const Flight = require('./Flight');
+const User = require('./User');
 
 // Connect to DB server; note the DB selection: 'ba', like a path
 mongoose.connect('mongodb://127.0.0.1/ba');
@@ -81,6 +83,10 @@ db.once('open', async () => {
   try {
     const flights = await Flight.find();
     console.log('flights:', flights);
+
+    // Let's also add some Users
+    await createUsers();
+
   } catch ( err ){
     console.log('Error finding flights:', err);
 
@@ -92,5 +98,27 @@ db.once('open', async () => {
 
   process.exit(0); // all good, quit program
 
-
 }); // once open
+
+
+const createUsers = async () => {
+
+  await User.deleteMany(); // User.destroy_all
+
+  const results = await User.create([
+    {
+      name: 'Test User 1',
+      email: 'one@one.com',
+      // password: 'chicken',
+      passwordDigest: bcrypt.hashSync('chicken', 10)
+    },
+    {
+      name: 'Test User 2',
+      email: 'two@two.com',
+      passwordDigest: bcrypt.hashSync('chicken', 10)
+    },
+  ]);
+
+  console.log(`Created Users:`, results);
+
+}; // createUsers()

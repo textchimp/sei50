@@ -50,10 +50,10 @@ FlightSchema.methods.saveReservation = async function(row, col, user){
   // Save our new reservation into both the current flight
   // (and include the reference to the User),
   // and also into the User (including the Flight reference)
-  this.reservations.push( { row, col, user } );
+  this.reservations.push( { row, col, user: user._id } );
   await this.save(); // actually save the changes on the line above to the DB
 
-  user.reservations.push( { row, col, flight: this } );
+  user.reservations.push( { row, col, flight: this._id } );
   await user.save();
 
   return this; // so you chain this method with other Mongoose methods!

@@ -152,10 +152,11 @@ const createUsers = async (testFlights) => {
   let users = await User.find({}); //.populate('reservations.flight');
 
   await testFlights[0].saveReservation( 10, 1, users[0] );
-  await testFlights[1].saveReservation( 10, 2, users[0] );
   await testFlights[1].saveReservation( 10, 2, users[1] );
 
-  users = await User.find({}).populate('reservations.flight');
+  // await testFlights[1].saveReservation( 10, 2, users[1] );
+
+  users = await User.find({}); //.populate('reservations.flight');
 
 
   console.log('Created users:', users);

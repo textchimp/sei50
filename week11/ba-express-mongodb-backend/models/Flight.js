@@ -26,18 +26,40 @@ const FlightSchema = new mongoose.Schema({
     {
       row: Number,
       col: Number,
-      user_id: Number // just for now, kind of fake/cheating
+      // user_id: Number // just for now, kind of fake/cheating
 
       // TODO: make this work
-      // user: {
-      //   type: mongoose.Schema.Types.ObjectID,
-      //   ref: 'User' // 'a Reservation belongs to a User'
-      // }
+      user: {
+        type: mongoose.Schema.Types.ObjectID,
+        ref: 'User' // 'a Reservation belongs to a User'
+      }
 
     }
   ] // reservations array
 
 }); // end of new mongoose.Schema({...})
+
+
+// This model method can't be an arrow function because
+// Mongoose needs to set the value of 'this' to refer
+// to "the current flight" for us
+// i.e. if we write f1.saveReservation()
+// then 'this' will refer to 'f1'
+FlightSchema.methods.saveReservation = async function(row, col, user){
+
+  // Save our new reservation into both the current flight
+  // (and include the reference to the User),
+  // and also into the User (including the Flight reference)
+  this.reservations.push( { row, col, user } );
+  await this.save(); // actually save the changes on the line above to the DB
+
+  user.reservations.push( { row, col, flight: this } );
+  await user.save();
+
+  return this; // so you chain this method with other Mongoose methods!
+
+}; // saveReservation()
+
 
 // In order to be able to `require()` this model file in
 // our seeds file and in our Express server, we need

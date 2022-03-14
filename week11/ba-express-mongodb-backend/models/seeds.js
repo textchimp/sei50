@@ -58,9 +58,9 @@ db.once('open', async () => {
         // list of reservations for that user, which will link back to
         // this Flight using the flight ID
         reservations: [
-          { row: 1, col: 1, user_id: 10 }, // NOT real user_ids yet!
-          { row: 2, col: 2, user_id: 10 },
-          { row: 3, col: 3, user_id: 11 }
+          { row: 1, col: 1 }, // NOT real user_ids yet!
+          { row: 2, col: 2 },
+          { row: 3, col: 3 }
         ], // reservations[]
       }, // end of flight #1
       {
@@ -70,9 +70,9 @@ db.once('open', async () => {
         departure_date: new Date('2022-03-21T04:20:00Z'),
         airplane: { name: '767', rows: 16, cols: 4 },
         reservations: [
-          { row: 1, col: 1, user_id: 10 }, // NOT real user_ids yet!
-          { row: 1, col: 2, user_id: 10 },
-          { row: 1, col: 3, user_id: 11 }
+          { row: 1, col: 1 }, // NOT real user_ids yet!
+          { row: 1, col: 2 },
+          { row: 1, col: 3 }
         ], // reservations[]
       }, // end of flight #2
     ]);
@@ -111,31 +111,31 @@ const createUsers = async (testFlights) => {
       email: 'one@one.com',
       // password: 'chicken',
       passwordDigest: bcrypt.hashSync('chicken', 10),
-      reservations: [
-        {
-          row: 10,
-          col: 1,
-          // need to give an actual flight object (document)
-          flight: testFlights[0],
-        },
-        {
-          row: 11,
-          col: 12,
-          flight: testFlights[1]
-        }
-      ],
+      // reservations: [
+      //   {
+      //     row: 10,
+      //     col: 1,
+      //     // need to give an actual flight object (document)
+      //     flight: testFlights[0],
+      //   },
+      //   {
+      //     row: 11,
+      //     col: 12,
+      //     flight: testFlights[1]
+      //   }
+      // ],
     },
     {
       name: 'Test User 2',
       email: 'two@two.com',
       passwordDigest: bcrypt.hashSync('chicken', 10),
-      reservations: [
-        {
-          row: 1,
-          col: 2,
-          flight: testFlights[0]
-        }
-      ]
+      // reservations: [
+      //   {
+      //     row: 1,
+      //     col: 2,
+      //     flight: testFlights[0]
+      //   }
+      // ]
     },
   ]);
 
@@ -149,7 +149,15 @@ const createUsers = async (testFlights) => {
   // To actually get the details of a Flight reference
   // (which is within the reservations array) when we query
   // the User, you need to use .populate()
-  const users = await User.find({}).populate('reservations.flight');
+  let users = await User.find({}); //.populate('reservations.flight');
+
+  await testFlights[0].saveReservation( 10, 1, users[0] );
+  await testFlights[1].saveReservation( 10, 2, users[0] );
+  await testFlights[1].saveReservation( 10, 2, users[1] );
+
+  users = await User.find({}).populate('reservations.flight');
+
+
   console.log('Created users:', users);
   console.log(users[0].reservations, users[1].reservations);
 

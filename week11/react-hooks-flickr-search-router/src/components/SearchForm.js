@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
 
-import { useSelector, useDispatch } from 'react-redux';
+// import { useSelector, useDispatch } from 'react-redux';
 
 import FlickrImage from './FlickrImage';
 
@@ -14,8 +14,9 @@ function SearchForm( props ){
   // Like any hook, this is "reactive" - if the data changes, it triggers your
   // component to re-render (i.e. the whole SearchForm function runs again so
   // it gets the latest value, as if "notified" of changes to that global state)
-  const faves = useSelector( state => state.favouritePhotos );
-  const dispatch = useDispatch();
+
+  // const faves = useSelector( state => state.favouritePhotos );
+  // const dispatch = useDispatch();
 
   const [searchText, setSearchText] = useState('');
   // const array = useState('');
@@ -28,6 +29,7 @@ function SearchForm( props ){
   // .... EXCEPT it's changed again, and now to get the equivalent
   // of the push method we use the hook called useNavigate()
   const navigate = useNavigate();
+  // console.log('un', useNavigate);
 
   function handleInput( ev ){
     setSearchText( ev.target.value );
@@ -44,14 +46,16 @@ function SearchForm( props ){
   // <button onClick={ () => dispatch({type: 'clickCounter/decremented'}) }>
   //   Decrement
   // </button>
+    /*
+    <div className="favourites">
+    {
+    faves.map( f => <FlickrImage photo={ f } size="s" /> )
+    }
+    </div>
+    */
 
   return (
     <div>
-      <div className="favourites">
-        {
-          faves.map( f => <FlickrImage photo={ f } size="s" /> )
-        }
-      </div>
       <form onSubmit={ handleSubmit }>
         <input type="text" onChange={ handleInput } />
         <button>Search</button>

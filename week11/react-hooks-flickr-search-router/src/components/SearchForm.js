@@ -39,7 +39,9 @@ function SearchForm( props ){
   function handleSubmit( ev ){
     ev.preventDefault();
     // props.history.push(`/search/${ searchText }`);
+
     navigate(`/search/${ searchText }`);
+
   } // handleSubmit()
 
   // <h3>Redux counter value: { counter }</h3>

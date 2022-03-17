@@ -1,5 +1,5 @@
 
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 
 const FlickrImage = ({ photo, size }) => {
   // const {photo, size} = props;
